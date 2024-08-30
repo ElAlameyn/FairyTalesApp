@@ -41,7 +41,10 @@ final class RecognitionViewModel: ObservableObject {
     var speechRecognizer = SpeechRecognizer()
     
     private var recognizedText: AnyPublisher<String, Never> {
-        speechRecognizer.$text.share().eraseToAnyPublisher()
+        speechRecognizer.$text
+            .print("Recognized text")
+//            .share()
+            .eraseToAnyPublisher()
     }
     
     private var matches = ["plant", "was"]
@@ -49,31 +52,25 @@ final class RecognitionViewModel: ObservableObject {
     init() {
         recognizedText
             .receive(on: DispatchQueue.main)
-            .sink {  [weak self] recognizedText in
+            .flatMap { Array($0.split(separator: " ")).publisher }
+            .sink {  [weak self] recognizedWord in
+                print("Word: \(recognizedWord)")
                 guard let self else { return }
-                let recognizedWords = Array(recognizedText.split(separator: " "))
-                
-                recognizedWords.forEach { word in
-                    if let range = self.text.range(of: word, options: .caseInsensitive) {
-                        self.text[range].foregroundColor = .green
-                    }
+                if let range = self.text.range(of: recognizedWord, options: .caseInsensitive) {
+                    self.text[range].foregroundColor = .green
                 }
             }
             .store(in: &cancallables)
         
         recognizedText
-            .contains(where: { recognizedText in
-                let recognizedWords = Array(recognizedText.split(separator: " "))
-                var isMatch = false
-                recognizedWords.forEach { word in
-                    if self.matches.contains(where: { match in
-                        match.caseInsensitiveCompare(word) == .orderedSame
-                    }) {
-                        isMatch = true
-                        return
-                    }
+            .flatMap { Array($0.split(separator: " ")).publisher }
+            .contains(where: { recognizedWord in
+                if self.matches.contains(where: { match in
+                    match.caseInsensitiveCompare(recognizedWord) == .orderedSame
+                }) {
+                    return true
                 }
-                return isMatch
+                return false
 
             })
             .receive(on: DispatchQueue.main)
