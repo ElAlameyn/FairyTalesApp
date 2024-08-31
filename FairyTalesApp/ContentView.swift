@@ -9,6 +9,7 @@ import SwiftUI
 import AVFoundation
 import Dependencies
 import Lottie
+import Overture
 
 import Combine
 
@@ -17,8 +18,6 @@ final class RecognitionViewModel: ObservableObject {
     @Published var playbackMode = LottiePlaybackMode.paused(at: .progress(0))
     @Published var text: AttributedString = "The plant was grown"
     @Published var status = Status.stopRecognition
-    
-    private var cancallables = Set<AnyCancellable>()
     
     enum Status {
         case startRecognition
@@ -34,54 +33,40 @@ final class RecognitionViewModel: ObservableObject {
         }
     }
     
-    init(_text: AttributedString) {
+    init(_text: AttributedString = "The plant was grown") {
         self.text = _text
     }
     
     var speechRecognizer = SpeechRecognizer()
     
-    private var recognizedText: AnyPublisher<String, Never> {
-        speechRecognizer.$text
-            .print("Recognized text")
-//            .share()
-            .eraseToAnyPublisher()
-    }
-    
     private var matches = ["plant", "was"]
     
-    init() {
-        recognizedText
-            .receive(on: DispatchQueue.main)
-            .flatMap { Array($0.split(separator: " ")).publisher }
-            .sink {  [weak self] recognizedWord in
-                print("Word: \(recognizedWord)")
-                guard let self else { return }
-                if let range = self.text.range(of: recognizedWord, options: .caseInsensitive) {
-                    self.text[range].foregroundColor = .green
-                }
-            }
-            .store(in: &cancallables)
-        
-        recognizedText
-            .flatMap { Array($0.split(separator: " ")).publisher }
-            .contains(where: { recognizedWord in
-                if self.matches.contains(where: { match in
-                    match.caseInsensitiveCompare(recognizedWord) == .orderedSame
-                }) {
-                    return true
-                }
-                return false
-
-            })
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isMatch in
-                guard let self else { return }
-                if isMatch {
-                    playbackMode = .playing(.fromProgress(0, toProgress: 1, loopMode: .playOnce))
-                }
-            }
-            .store(in: &cancallables)
+    private func makeTextColored(recognizedWord: Substring) {
+        if let range = self.text.range(of: recognizedWord, options: .caseInsensitive) {
+            self.text[range].foregroundColor = .green
+        }
     }
+    
+    private func matchToAnimation(recognizedWord: Substring) {
+        if self.matches.contains(where: { match in
+            match.caseInsensitiveCompare(recognizedWord) == .orderedSame
+        }) {
+            playbackMode = .playing(.fromProgress(0, toProgress: 1, loopMode: .playOnce))
+        }
+    }
+    
+    
+    func bind() async {
+        do {
+            for try await word in speechRecognizer.recognizedWordsStream {
+                makeTextColored(recognizedWord: word)
+                matchToAnimation(recognizedWord: word)
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+    }
+    
     
     func startRecording() async {
         await speechRecognizer.startRecognition()
@@ -95,6 +80,7 @@ final class RecognitionViewModel: ObservableObject {
     }
 }
 
+
 struct ContentView: View {
     @EnvironmentObject var recognitonViewModel: RecognitionViewModel
     @ObservedObject var recorder = AudioRecoder()
@@ -104,30 +90,6 @@ struct ContentView: View {
     let player = AVPlayer(url: Directory.foo)
     @Dependency(\.audioSession) var audioSession
     
-    var recordingButton: some View {
-        Button(recordTitle) {
-            buttonDisabled = true
-            recordTitle = recordTitle == "Start recording" ? "Stop recording" : "Start recording"
-            Task {
-                if await recorder.isRecording {
-                    await recorder.stopRecording()
-                } else {
-                    await recorder.startRecording()
-                }
-                buttonDisabled = false
-            }
-        }
-        .animation(.easeIn)
-        .disabled(buttonDisabled)
-    }
-    
-    var playRecorded: some View {
-        Button("Play recorded video") {
-            try! audioSession.setForPlayback()
-            player.replaceCurrentItem(with: .init(url: Directory.foo))
-            player.play()
-        }
-    }
     
     var body: some View {
         VStack {
@@ -165,10 +127,13 @@ struct ContentView: View {
                             .frame(width: 25, height: 25)
                     }
                 }
-
+            
             
             Spacer()
             
+        }
+        .task {
+            await recognitonViewModel.bind()
         }
         .padding()
     }
@@ -178,3 +143,32 @@ struct ContentView: View {
     ContentView()
         .environmentObject(RecognitionViewModel(_text: "Hello my boy"))
 }
+
+
+// MARK: - For future time
+
+//
+//var recordingButton: some View {
+//    Button(recordTitle) {
+//        buttonDisabled = true
+//        recordTitle = recordTitle == "Start recording" ? "Stop recording" : "Start recording"
+//        Task {
+//            if await recorder.isRecording {
+//                await recorder.stopRecording()
+//            } else {
+//                await recorder.startRecording()
+//            }
+//            buttonDisabled = false
+//        }
+//    }
+//    .animation(.easeIn)
+//    .disabled(buttonDisabled)
+//}
+//
+//var playRecorded: some View {
+//    Button("Play recorded video") {
+//        try! audioSession.setForPlayback()
+//        player.replaceCurrentItem(with: .init(url: Directory.foo))
+//        player.play()
+//    }
+//}

@@ -11,6 +11,7 @@
 		860277F82C3ECEF800BCC7A8 /* AVAudioSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860277F72C3ECEF800BCC7A8 /* AVAudioSession.swift */; };
 		8621635A2C16EC3B0005F090 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 862163592C16EC3B0005F090 /* Dependencies */; };
 		8621635C2C16EC3B0005F090 /* DependenciesMacros in Frameworks */ = {isa = PBXBuildFile; productRef = 8621635B2C16EC3B0005F090 /* DependenciesMacros */; };
+		8621DE1F2C83AA6800242B0E /* FairyTalesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */; };
 		865302D72C0241EF004D11C1 /* Overture in Frameworks */ = {isa = PBXBuildFile; productRef = 865302D62C0241EF004D11C1 /* Overture */; };
 		865302D92C0243F3004D11C1 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865302D82C0243F3004D11C1 /* AudioRecorder.swift */; };
 		865302DB2C02441F004D11C1 /* FileHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865302DA2C02441F004D11C1 /* FileHelpers.swift */; };
@@ -23,9 +24,21 @@
 		867C84732C76AE1A00833E5D /* plant_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 867C84722C76AE1A00833E5D /* plant_animation.json */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8621DE202C83AA6800242B0E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 866D994E2BFCAEBA00E73A8F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 866D99552BFCAEBA00E73A8F;
+			remoteInfo = FairyTales;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		860277F52C3ECEF800BCC7A8 /* UserAccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccessManager.swift; sourceTree = "<group>"; };
 		860277F72C3ECEF800BCC7A8 /* AVAudioSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioSession.swift; sourceTree = "<group>"; };
+		8621DE1C2C83AA6800242B0E /* FairyTalesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FairyTalesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FairyTalesTests.swift; sourceTree = "<group>"; };
 		865302D82C0243F3004D11C1 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		865302DA2C02441F004D11C1 /* FileHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHelpers.swift; sourceTree = "<group>"; };
 		865302DC2C024514004D11C1 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
@@ -38,6 +51,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8621DE192C83AA6800242B0E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		866D99532BFCAEBA00E73A8F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,10 +72,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8621DE1D2C83AA6800242B0E /* FairyTalesTests */ = {
+			isa = PBXGroup;
+			children = (
+				8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */,
+			);
+			path = FairyTalesTests;
+			sourceTree = "<group>";
+		};
 		866D994D2BFCAEBA00E73A8F = {
 			isa = PBXGroup;
 			children = (
 				866D99582BFCAEBA00E73A8F /* FairyTalesApp */,
+				8621DE1D2C83AA6800242B0E /* FairyTalesTests */,
 				866D99572BFCAEBA00E73A8F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				866D99562BFCAEBA00E73A8F /* FairyTales.app */,
+				8621DE1C2C83AA6800242B0E /* FairyTalesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -104,6 +134,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8621DE1B2C83AA6800242B0E /* FairyTalesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8621DE222C83AA6800242B0E /* Build configuration list for PBXNativeTarget "FairyTalesTests" */;
+			buildPhases = (
+				8621DE182C83AA6800242B0E /* Sources */,
+				8621DE192C83AA6800242B0E /* Frameworks */,
+				8621DE1A2C83AA6800242B0E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8621DE212C83AA6800242B0E /* PBXTargetDependency */,
+			);
+			name = FairyTalesTests;
+			productName = FairyTalesTests;
+			productReference = 8621DE1C2C83AA6800242B0E /* FairyTalesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		866D99552BFCAEBA00E73A8F /* FairyTales */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 866D99642BFCAEBB00E73A8F /* Build configuration list for PBXNativeTarget "FairyTales" */;
@@ -137,6 +185,10 @@
 				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
+					8621DE1B2C83AA6800242B0E = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 866D99552BFCAEBA00E73A8F;
+					};
 					866D99552BFCAEBA00E73A8F = {
 						CreatedOnToolsVersion = 15.3;
 					};
@@ -161,11 +213,19 @@
 			projectRoot = "";
 			targets = (
 				866D99552BFCAEBA00E73A8F /* FairyTales */,
+				8621DE1B2C83AA6800242B0E /* FairyTalesTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8621DE1A2C83AA6800242B0E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		866D99542BFCAEBA00E73A8F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -179,6 +239,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8621DE182C83AA6800242B0E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8621DE1F2C83AA6800242B0E /* FairyTalesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		866D99522BFCAEBA00E73A8F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -195,7 +263,49 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8621DE212C83AA6800242B0E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 866D99552BFCAEBA00E73A8F /* FairyTales */;
+			targetProxy = 8621DE202C83AA6800242B0E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		8621DE232C83AA6800242B0E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Bravery.FairyTalesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FairyTales.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FairyTales";
+			};
+			name = Debug;
+		};
+		8621DE242C83AA6800242B0E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Bravery.FairyTalesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FairyTales.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FairyTales";
+			};
+			name = Release;
+		};
 		866D99622BFCAEBB00E73A8F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -378,6 +488,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8621DE222C83AA6800242B0E /* Build configuration list for PBXNativeTarget "FairyTalesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8621DE232C83AA6800242B0E /* Debug */,
+				8621DE242C83AA6800242B0E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		866D99512BFCAEBA00E73A8F /* Build configuration list for PBXProject "FairyTales" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

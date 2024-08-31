@@ -14,6 +14,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>FairyTalesTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 		<key>Overture (Playground) 1.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -34,6 +39,19 @@
 			<false/>
 			<key>orderHint</key>
 			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>8621DE1B2C83AA6800242B0E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>866D99552BFCAEBA00E73A8F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

@@ -24,12 +24,19 @@ class SpeechRecognizer: ObservableObject {
     @Dependency(\.userAccessManager) var userAccessManager
     @Dependency(\.audioSession) var audioSessionShared
     
-    @MainActor @Published var text: String = "" {
-        didSet {
-            print("Recognized: \(text)")
-        }
+    
+    var recognizedWordsStream: AsyncThrowingStream<Substring, Error> {
+        textStream
+            .stream
+            .flatMap {
+                Array($0.split(separator: " ")).publisher.values
+            }
+            .eraseToThrowingStream()
     }
     
+    private let textStream = AsyncThrowingStream<String, Error>.makeStream()
+    private var textContinuation: AsyncThrowingStream<String, Error>.Continuation { textStream.continuation }
+
     @Published var isRecognizing = false
     
     func startRecognition() async {
@@ -65,12 +72,17 @@ class SpeechRecognizer: ObservableObject {
         }
         
         recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) {  [weak self] result, error in
-            DispatchQueue.main.async { [self] in
-                self?.text = result?.bestTranscription.formattedString ?? ""
-            }
             
-            guard error != nil || result?.isFinal == true else { return }
-            self?.stopRecognition()
+            guard let self else { return }
+            
+            if let result {
+                textContinuation.yield(result.bestTranscription.formattedString)
+            } else if let error {
+                textContinuation.yield(with: .failure(error))
+                stopRecognition()
+            } else if result?.isFinal == true {
+                stopRecognition()
+            }
         }
         
         audioEngine.prepare()
