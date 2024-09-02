@@ -13,6 +13,7 @@
 		8621635C2C16EC3B0005F090 /* DependenciesMacros in Frameworks */ = {isa = PBXBuildFile; productRef = 8621635B2C16EC3B0005F090 /* DependenciesMacros */; };
 		8621DE1F2C83AA6800242B0E /* FairyTalesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */; };
 		8639499A2C85C6FB003DFBFE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 863949992C85C6FB003DFBFE /* ComposableArchitecture */; };
+		8639499C2C85D79E003DFBFE /* RecognitionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8639499B2C85D79E003DFBFE /* RecognitionFeature.swift */; };
 		864749F72C88517B00B8C7D3 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864749F62C88517B00B8C7D3 /* Chapter.swift */; };
 		865302D72C0241EF004D11C1 /* Overture in Frameworks */ = {isa = PBXBuildFile; productRef = 865302D62C0241EF004D11C1 /* Overture */; };
 		865302D92C0243F3004D11C1 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865302D82C0243F3004D11C1 /* AudioRecorder.swift */; };
@@ -41,6 +42,7 @@
 		860277F72C3ECEF800BCC7A8 /* AVAudioSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioSession.swift; sourceTree = "<group>"; };
 		8621DE1C2C83AA6800242B0E /* FairyTalesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FairyTalesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FairyTalesTests.swift; sourceTree = "<group>"; };
+		8639499B2C85D79E003DFBFE /* RecognitionFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionFeature.swift; sourceTree = "<group>"; };
 		864749F62C88517B00B8C7D3 /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		865302D82C0243F3004D11C1 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		865302DA2C02441F004D11C1 /* FileHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHelpers.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				865302DA2C02441F004D11C1 /* FileHelpers.swift */,
 				860277F52C3ECEF800BCC7A8 /* UserAccessManager.swift */,
 				860277F72C3ECEF800BCC7A8 /* AVAudioSession.swift */,
+				8639499B2C85D79E003DFBFE /* RecognitionFeature.swift */,
 				866D995B2BFCAEBA00E73A8F /* ChapterView.swift */,
 				866D995F2BFCAEBB00E73A8F /* Preview Content */,
 				866D995D2BFCAEBB00E73A8F /* Assets.xcassets */,
@@ -268,6 +271,7 @@
 			files = (
 				865302DD2C024514004D11C1 /* SpeechRecognizer.swift in Sources */,
 				865302D92C0243F3004D11C1 /* AudioRecorder.swift in Sources */,
+				8639499C2C85D79E003DFBFE /* RecognitionFeature.swift in Sources */,
 				860277F82C3ECEF800BCC7A8 /* AVAudioSession.swift in Sources */,
 				860277F62C3ECEF800BCC7A8 /* UserAccessManager.swift in Sources */,
 				866D995C2BFCAEBA00E73A8F /* ChapterView.swift in Sources */,

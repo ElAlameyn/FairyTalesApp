@@ -14,35 +14,39 @@ final class FairyTalesTests: XCTestCase {
     
     @MainActor
     func testSpeechRecognitionAnimation() async throws {
-        let store = TestStore(initialState: RecognitionFeature.State(chapter: .helloWorld)) {
-            RecognitionFeature()
+        let store = TestStore(initialState: ChapterFeature.State(chapter: .helloWorld)) {
+            ChapterFeature()
         }
         
         store.exhaustivity = .off
         
-        await store.send(.startRecording) {
-            $0.status = .startRecognition
+        await store.send(.recognitionFeature(.startRecording)) {
+            $0.recognitionState.status = .startRecognition
         }
         
+        await store.skipReceivedActions()
+        
         for match in Chapter.helloWorld.matches {
-            guard let range = store.state.text.range(of: match) else {
+            guard let range = store.state.visibleText.range(of: match) else {
                 XCTFail()
                 return
             }
-            XCTAssert(store.state.text[range].foregroundColor == .green)
+            XCTAssert(store.state.visibleText[range].foregroundColor == .green)
         }
     }
     @MainActor
     func testSpeechRecognitionMatch() async throws {
-        let store = TestStore(initialState: RecognitionFeature.State(chapter: .helloWorld)) {
-            RecognitionFeature()
+        let store = TestStore(initialState: ChapterFeature.State(chapter: .helloWorld)) {
+            ChapterFeature()
         }
         
         store.exhaustivity = .off
-
-        await store.send(.startRecording) {
-            $0.status = .startRecognition
+        
+        await store.send(.recognitionFeature(.startRecording)) {
+            $0.recognitionState.status = .startRecognition
         }
+        
+        await store.skipReceivedActions()
         
         XCTAssert(store.state.playbackMode != .paused(at: .progress(0)))
     }

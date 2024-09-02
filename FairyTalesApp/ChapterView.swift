@@ -14,16 +14,16 @@ import ComposableArchitecture
 
 
 @Reducer
-struct RecognitionFeature {
+struct ChapterFeature {
     @ObservableState
     struct State: Equatable {
         var playbackMode = LottiePlaybackMode.paused(at: .progress(0))
-        var text: AttributedString = ""
-        var status = Status.stopRecognition
+        var recognitionState = RecognitionFeature.State()
+        var visibleText = AttributedString("")
         var matches = [String]()
         
         init(chapter: Chapter) {
-            self.text = AttributedString(chapter.text)
+            self.visibleText = AttributedString(chapter.text)
             self.matches = chapter.matches
         }
         
@@ -35,48 +35,31 @@ struct RecognitionFeature {
     
     enum Action {
         case recordButtonTapped
-        case startRecording
-        case stopRecording
-        case bind
-        case getRecognized(word: Substring)
+        case recognitionFeature(RecognitionFeature.Action)
     }
     
     @Dependency(\.speechRecognizerClient) var speechRecognizer
     
     var body: some ReducerOf<Self> {
+        
+        Scope(state: \.recognitionState, action: \.recognitionFeature) {
+            RecognitionFeature()
+        }
+        
         Reduce { state, action in
-            
             switch action {
             case .recordButtonTapped:
-                return .run { [status = state.status] send  in
-                    status == .stopRecognition ? await send(.startRecording) : await send(.stopRecording)
+                return .run { [status = state.recognitionState.status] send  in
+                    status == .stopRecognition ? await send(.recognitionFeature(.startRecording)) : await send(.recognitionFeature(.stopRecording))
                 }
-            case .startRecording:
-                state.status = .startRecognition
-                return .run { send in
-                    await speechRecognizer.startRecognition()
-                    await send(.bind)
-                }
-            case .stopRecording:
-                state.status = .stopRecognition
-                return .run { _ in
-                    await speechRecognizer.stopRecognition()
-                }
-            case .bind:
-                return .run { send in
-                    for try await word in await speechRecognizer.recognizedSpeech() {
-                        await send(.getRecognized(word: word))
-                    }
-                }
-                
-            case let .getRecognized(word: word):
+            case let .recognitionFeature(.getRecognized(word: word)):
                 
                 makeTextColored(recognizedWord: word)
                 matchToAnimation(recognizedWord: word)
 
                 func makeTextColored(recognizedWord: Substring) {
-                    if let range = state.text.range(of: recognizedWord, options: .caseInsensitive) {
-                        state.text[range].foregroundColor = .green
+                    if let range = state.visibleText.range(of: recognizedWord, options: .caseInsensitive) {
+                        state.visibleText[range].foregroundColor = .green
                     }
                 }
                 
@@ -87,17 +70,20 @@ struct RecognitionFeature {
                         state.playbackMode = .playing(.fromProgress(0, toProgress: 1, loopMode: .playOnce))
                     }
                 }
+            case .recognitionFeature(_): break
             }
             return .none
         }
+        
     }
+    
 }
 
 struct ChapterView: View {
     @State var isPressed = false
     
-    let store: StoreOf<RecognitionFeature> = .init(initialState: .init(chapter: .plantWasGrown)) {
-        RecognitionFeature()._printChanges()
+    let store: StoreOf<ChapterFeature> = .init(initialState: .init(chapter: .plantWasGrown)) {
+        ChapterFeature()._printChanges()
     }
     
     
@@ -107,7 +93,7 @@ struct ChapterView: View {
             LottieView(animation: .named("plant_animation"))
                 .playbackMode(store.playbackMode)
             
-            Text(store.text)
+            Text(store.visibleText)
             
             Spacer()
                 .frame(height: 30)
