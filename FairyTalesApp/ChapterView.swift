@@ -21,10 +21,12 @@ struct ChapterFeature {
         var recognitionState = RecognitionFeature.State()
         var visibleText = AttributedString("")
         var matches = [String]()
+        var animationName: String = ""
         
         init(chapter: Chapter) {
             self.visibleText = AttributedString(chapter.text)
             self.matches = chapter.matches
+            self.animationName = chapter.animatinonName
         }
         
         enum Status {
@@ -57,7 +59,7 @@ struct ChapterFeature {
                 
                 makeTextColored(recognizedWords: word)
                 matchToAnimation(recognizedWords: word)
-
+                
                 func makeTextColored(recognizedWords: [Substring]) {
                     for word in recognizedWords {
                         let visibleWords = String(state.visibleText.characters)
@@ -68,7 +70,7 @@ struct ChapterFeature {
                                 
                                 let matchedWord = visibleWord[range].count
                                 let fullCount = visibleWord.count
-
+                                
                                 if fullCount - matchedWord <= 3 {
                                     state.visibleText.range(of: visibleWord[...]).map {
                                         state.visibleText[$0].foregroundColor = .green
@@ -76,10 +78,6 @@ struct ChapterFeature {
                                 }
                             }
                         }
-//
-//                        if let range = state.visibleText.range(of: word, options: .caseInsensitive) {
-//                            state.visibleText[range].foregroundColor = .green
-//                        }
                     }
                 }
                 
@@ -95,7 +93,7 @@ struct ChapterFeature {
             case .recognitionFeature(_): break
             }
             return .none
-        }
+        }   
         
     }
     
@@ -104,15 +102,26 @@ struct ChapterFeature {
 struct ChapterView: View {
     @State var isPressed = false
     
-    let store: StoreOf<ChapterFeature> = .init(initialState: .init(chapter: .plantWasGrown)) {
-        ChapterFeature()._printChanges()
+    var store: StoreOf<ChapterFeature>
+    
+    init(store: StoreOf<ChapterFeature>) {
+        self.init(isInitedStore: false)
+        self.store = store
+    }
+    
+    init(isInitedStore: Bool = true) {
+        store = .init(initialState: .init(chapter: .plantWasGrown), reducer: {
+            ChapterFeature()
+        })
+        UIPageControl.appearance().currentPageIndicatorTintColor = .black
+        UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.3)
     }
     
     
     var body: some View {
+        
         VStack {
-            
-            LottieView(animation: .named("plant_animation"))
+            LottieView(animation: .named(store.animationName))
                 .playbackMode(store.playbackMode)
             
             Text(store.visibleText)
@@ -140,8 +149,8 @@ struct ChapterView: View {
                     }
                 }
             
+            Spacer().frame(height: 40)
             
-            Spacer()
             
         }
         .padding()
@@ -152,6 +161,26 @@ struct ChapterView: View {
     ChapterView()
 }
 
+#Preview {
+    ChaptersView()
+}
+
+struct ChaptersView: View {
+    
+    var chapters: [Chapter] = Chapters.One.values
+    
+    var body: some View {
+        TabView {
+            ForEach(chapters, id: \.self) { chapter in
+                ChapterView(store:
+                        .init(initialState: .init(chapter: chapter), reducer: {
+                            ChapterFeature()
+                        }))
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .always))
+    }
+}
 
 // MARK: - For future time
 

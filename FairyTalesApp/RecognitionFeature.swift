@@ -50,6 +50,8 @@ struct RecognitionFeature {
                     for try await words in await speechRecognizer.recognizedSpeech() {
                         await send(.getRecognized(words: words))
                     }
+                } catch: { error, send in
+                    print(error.localizedDescription)
                 }
                 
             case .getRecognized(words: _):

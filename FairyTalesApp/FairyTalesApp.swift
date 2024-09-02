@@ -11,7 +11,7 @@ import SwiftUI
 struct FairyTalesApp: App {
     var body: some Scene {
         WindowGroup {
-            ChapterView()
+            ChaptersView()
         }
     }
 }

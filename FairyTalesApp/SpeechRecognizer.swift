@@ -103,6 +103,7 @@ extension SpeechRecognizerClient: DependencyKey {
             
             print("Recording format: \(recordingFormat)")
             
+            inputNode.removeTap(onBus: 0)
             inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
                 recognitionRequest.append(buffer)
             }

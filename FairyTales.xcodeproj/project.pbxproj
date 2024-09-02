@@ -14,6 +14,8 @@
 		8621DE1F2C83AA6800242B0E /* FairyTalesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */; };
 		8639499A2C85C6FB003DFBFE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 863949992C85C6FB003DFBFE /* ComposableArchitecture */; };
 		8639499C2C85D79E003DFBFE /* RecognitionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8639499B2C85D79E003DFBFE /* RecognitionFeature.swift */; };
+		8639499E2C8604DF003DFBFE /* open_window_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 8639499D2C8604DF003DFBFE /* open_window_animation.json */; };
+		863949A02C86055D003DFBFE /* sun_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 8639499F2C86055D003DFBFE /* sun_animation.json */; };
 		864749F72C88517B00B8C7D3 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864749F62C88517B00B8C7D3 /* Chapter.swift */; };
 		865302D72C0241EF004D11C1 /* Overture in Frameworks */ = {isa = PBXBuildFile; productRef = 865302D62C0241EF004D11C1 /* Overture */; };
 		865302D92C0243F3004D11C1 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865302D82C0243F3004D11C1 /* AudioRecorder.swift */; };
@@ -43,6 +45,8 @@
 		8621DE1C2C83AA6800242B0E /* FairyTalesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FairyTalesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FairyTalesTests.swift; sourceTree = "<group>"; };
 		8639499B2C85D79E003DFBFE /* RecognitionFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionFeature.swift; sourceTree = "<group>"; };
+		8639499D2C8604DF003DFBFE /* open_window_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = open_window_animation.json; sourceTree = "<group>"; };
+		8639499F2C86055D003DFBFE /* sun_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sun_animation.json; sourceTree = "<group>"; };
 		864749F62C88517B00B8C7D3 /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		865302D82C0243F3004D11C1 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		865302DA2C02441F004D11C1 /* FileHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHelpers.swift; sourceTree = "<group>"; };
@@ -142,6 +146,8 @@
 		867C84712C76AE1100833E5D /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				8639499D2C8604DF003DFBFE /* open_window_animation.json */,
+				8639499F2C86055D003DFBFE /* sun_animation.json */,
 				867C84722C76AE1A00833E5D /* plant_animation.json */,
 			);
 			path = Animations;
@@ -250,7 +256,9 @@
 			files = (
 				866D99612BFCAEBB00E73A8F /* Preview Assets.xcassets in Resources */,
 				866D995E2BFCAEBB00E73A8F /* Assets.xcassets in Resources */,
+				8639499E2C8604DF003DFBFE /* open_window_animation.json in Resources */,
 				867C84732C76AE1A00833E5D /* plant_animation.json in Resources */,
+				863949A02C86055D003DFBFE /* sun_animation.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
