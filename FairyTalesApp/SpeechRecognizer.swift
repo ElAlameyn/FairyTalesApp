@@ -13,7 +13,7 @@ import Dependencies
 
 
 struct SpeechRecognizerClient {
-    var recognizedSpeech: @Sendable () async -> AsyncThrowingStream<Substring, Error>
+    var recognizedSpeech: @Sendable () async -> AsyncThrowingStream<[Substring], Error>
     var startRecognition: @Sendable () async -> Void
     var stopRecognition: @Sendable () async -> Void
 }
@@ -41,8 +41,8 @@ extension SpeechRecognizerClient: DependencyKey {
     static var testValue: SpeechRecognizerClient {
         return Self {
             AsyncThrowingStream { continuation in
-                continuation.yield("hello")
-                continuation.yield("world")
+                continuation.yield(["hello"])
+                continuation.yield(["world"])
                 continuation.finish()
             }
         } startRecognition: { } stopRecognition: { }
@@ -59,21 +59,22 @@ extension SpeechRecognizerClient: DependencyKey {
         @Dependency(\.userAccessManager) var userAccessManager
         @Dependency(\.audioSession) var audioSessionShared
         
-        var recognizedWordsStream: AsyncThrowingStream<Substring, Error> {
+        var recognizedWordsStream: AsyncThrowingStream<[Substring], Error> {
             textStream
                 .stream
-                .flatMap {
-                    Array($0.split(separator: " ")).publisher.values
+                .flatMap { array in
+                    let transformed = array.map { $0.split(separator: " ") }
+                    return Array(transformed).publisher.values
                 }
                 .eraseToThrowingStream()
         }
         
-        private var textStream = AsyncThrowingStream<String, Error>.makeStream()
+        private var textStream = AsyncThrowingStream<[String], Error>.makeStream()
 
         var isRecognizing = false
         
         func startRecognition() async {
-            textStream = AsyncThrowingStream<String, Error>.makeStream()
+            textStream = AsyncThrowingStream<[String], Error>.makeStream()
             let textContinuation = textStream.continuation
             
             guard await userAccessManager.askForSpeechRecognition() == .authorized else { return }
@@ -111,7 +112,7 @@ extension SpeechRecognizerClient: DependencyKey {
                 guard let self else { return }
                 
                 if let result {
-                    textContinuation.yield(result.bestTranscription.formattedString)
+                    textContinuation.yield(result.transcriptions.map(\.formattedString))
                 } else if let error {
                     textContinuation.yield(with: .failure(error))
                     Task { await self.stopRecognition() }

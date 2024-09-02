@@ -52,22 +52,44 @@ struct ChapterFeature {
                 return .run { [status = state.recognitionState.status] send  in
                     status == .stopRecognition ? await send(.recognitionFeature(.startRecording)) : await send(.recognitionFeature(.stopRecording))
                 }
-            case let .recognitionFeature(.getRecognized(word: word)):
                 
-                makeTextColored(recognizedWord: word)
-                matchToAnimation(recognizedWord: word)
+            case let .recognitionFeature(.getRecognized(words: word)):
+                
+                makeTextColored(recognizedWords: word)
+                matchToAnimation(recognizedWords: word)
 
-                func makeTextColored(recognizedWord: Substring) {
-                    if let range = state.visibleText.range(of: recognizedWord, options: .caseInsensitive) {
-                        state.visibleText[range].foregroundColor = .green
+                func makeTextColored(recognizedWords: [Substring]) {
+                    for word in recognizedWords {
+                        let visibleWords = String(state.visibleText.characters)
+                            .components(separatedBy: " ")
+                        
+                        for visibleWord in visibleWords {
+                            if let range = visibleWord.range(of: word, options: .caseInsensitive) {
+                                
+                                let matchedWord = visibleWord[range].count
+                                let fullCount = visibleWord.count
+
+                                if fullCount - matchedWord <= 3 {
+                                    state.visibleText.range(of: visibleWord[...]).map {
+                                        state.visibleText[$0].foregroundColor = .green
+                                    }
+                                }
+                            }
+                        }
+//
+//                        if let range = state.visibleText.range(of: word, options: .caseInsensitive) {
+//                            state.visibleText[range].foregroundColor = .green
+//                        }
                     }
                 }
                 
-                func matchToAnimation(recognizedWord: Substring) {
-                    if state.matches.contains(where: { match in
-                        match.caseInsensitiveCompare(recognizedWord) == .orderedSame
-                    }) {
-                        state.playbackMode = .playing(.fromProgress(0, toProgress: 1, loopMode: .playOnce))
+                func matchToAnimation(recognizedWords: [Substring]) {
+                    for word in recognizedWords {
+                        if state.matches.contains(where: { match in
+                            match.caseInsensitiveCompare(word) == .orderedSame
+                        }) {
+                            state.playbackMode = .playing(.fromProgress(0, toProgress: 1, loopMode: .playOnce))
+                        }
                     }
                 }
             case .recognitionFeature(_): break

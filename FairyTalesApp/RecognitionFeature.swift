@@ -25,7 +25,7 @@ struct RecognitionFeature {
         case startRecording
         case stopRecording
         case bind
-        case getRecognized(word: Substring)
+        case getRecognized(words: [Substring])
     }
     
     @Dependency(\.speechRecognizerClient) var speechRecognizer
@@ -47,12 +47,12 @@ struct RecognitionFeature {
                 }
             case .bind:
                 return .run { send in
-                    for try await word in await speechRecognizer.recognizedSpeech() {
-                        await send(.getRecognized(word: word))
+                    for try await words in await speechRecognizer.recognizedSpeech() {
+                        await send(.getRecognized(words: words))
                     }
                 }
                 
-            case .getRecognized(word: _):
+            case .getRecognized(words: _):
                 return .none
                 
             }
