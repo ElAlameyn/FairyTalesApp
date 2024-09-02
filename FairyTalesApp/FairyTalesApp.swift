@@ -11,8 +11,7 @@ import SwiftUI
 struct FairyTalesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(RecognitionViewModel(chapter: .helloWorld))
+            ChapterView()
         }
     }
 }

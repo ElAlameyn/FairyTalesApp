@@ -14,25 +14,9 @@
             filePath = "FairyTalesApp/SpeechRecognizer.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
             landmarkName = "startRecognition()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CB191A63-B53C-4BCD-8DC6-3B1B8602E308"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FairyTalesTests/FairyTalesTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "testSpeechRecognitionMatch()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -82,36 +66,38 @@
             endingLineNumber = "45"
             landmarkName = "makeTextColored(recognizedWord:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "EB1B33FE-9F2D-4C54-926C-3F45E773DAAD - 2a949dfd8d76a9be"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FairyTales.RecognitionViewModel.makeTextColored(recognizedWord: Swift.Substring) -&gt; ()"
-                  moduleName = "FairyTales"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/funchar/Projects/iOS/FairyTalesApp/FairyTalesApp/ContentView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "45"
-                  endingLineNumber = "45">
-               </Location>
-               <Location
-                  uuid = "EB1B33FE-9F2D-4C54-926C-3F45E773DAAD - 2a949dfd8d76a9be"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FairyTales.RecognitionViewModel.makeTextColored(recognizedWord: Swift.Substring) -&gt; ()"
-                  moduleName = "FairyTales"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/funchar/Projects/iOS/FairyTalesApp/FairyTalesApp/ContentView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "45"
-                  endingLineNumber = "45">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "929C3894-82E1-4D72-85F6-F0FEE00E9352"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FairyTalesApp/SpeechRecognizer.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "startRecognition()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7F7CFCCF-1C25-404D-93D3-7A70676E499F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FairyTalesApp/ChapterView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

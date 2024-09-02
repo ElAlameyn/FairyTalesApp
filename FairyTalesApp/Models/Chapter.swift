@@ -14,4 +14,5 @@ struct Chapter {
 
 extension Chapter {
     static let helloWorld = Self(matches: ["hello"], text: "hello world")
+    static let plantWasGrown = Self(matches: ["растение", "выросло"], text: "Растение выросло")
 }

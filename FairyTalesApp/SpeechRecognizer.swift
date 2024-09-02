@@ -45,9 +45,7 @@ extension SpeechRecognizerClient: DependencyKey {
                 continuation.yield("world")
                 continuation.finish()
             }
-        } startRecognition: {
-        } stopRecognition: {
-        }
+        } startRecognition: { } stopRecognition: { }
     }
     
     private actor SpeechRecognizer {
@@ -58,10 +56,8 @@ extension SpeechRecognizerClient: DependencyKey {
         private var recognitionTask: SFSpeechRecognitionTask?
         private var audioSession: AVAudioSession?
         
-        
         @Dependency(\.userAccessManager) var userAccessManager
         @Dependency(\.audioSession) var audioSessionShared
-        
         
         var recognizedWordsStream: AsyncThrowingStream<Substring, Error> {
             textStream
@@ -72,12 +68,13 @@ extension SpeechRecognizerClient: DependencyKey {
                 .eraseToThrowingStream()
         }
         
-        private let textStream = AsyncThrowingStream<String, Error>.makeStream()
-        private nonisolated var textContinuation: AsyncThrowingStream<String, Error>.Continuation { textStream.continuation }
+        private var textStream = AsyncThrowingStream<String, Error>.makeStream()
 
         var isRecognizing = false
         
         func startRecognition() async {
+            textStream = AsyncThrowingStream<String, Error>.makeStream()
+            let textContinuation = textStream.continuation
             
             guard await userAccessManager.askForSpeechRecognition() == .authorized else { return }
             

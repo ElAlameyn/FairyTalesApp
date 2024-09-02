@@ -7,39 +7,44 @@
 
 import XCTest
 import Dependencies
+import ComposableArchitecture
 @testable import FairyTales
 
 final class FairyTalesTests: XCTestCase {
     
-    func testExample() throws { }
-    
-    
     @MainActor
     func testSpeechRecognitionAnimation() async throws {
+        let store = TestStore(initialState: RecognitionFeature.State(chapter: .helloWorld)) {
+            RecognitionFeature()
+        }
         
-        let chapter = Chapter.helloWorld
-        let model = RecognitionViewModel(chapter: .helloWorld)
-        await model.bind()
+        store.exhaustivity = .off
         
+        await store.send(.startRecording) {
+            $0.status = .startRecognition
+        }
         
         for match in Chapter.helloWorld.matches {
-            guard let range = model.text.range(of: match) else {
+            guard let range = store.state.text.range(of: match) else {
                 XCTFail()
                 return
             }
-            XCTAssert(model.text[range].foregroundColor == .green)
-            
+            XCTAssert(store.state.text[range].foregroundColor == .green)
         }
     }
-    
     @MainActor
     func testSpeechRecognitionMatch() async throws {
+        let store = TestStore(initialState: RecognitionFeature.State(chapter: .helloWorld)) {
+            RecognitionFeature()
+        }
         
-        let chapter = Chapter.helloWorld
-        let model = RecognitionViewModel(chapter: chapter)
-        await model.bind()
+        store.exhaustivity = .off
+
+        await store.send(.startRecording) {
+            $0.status = .startRecognition
+        }
         
-        XCTAssert(model.playbackMode != .paused(at: .progress(0)))
+        XCTAssert(store.state.playbackMode != .paused(at: .progress(0)))
     }
     
 }
