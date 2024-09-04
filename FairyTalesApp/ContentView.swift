@@ -11,12 +11,11 @@ import Dependencies
 import Lottie
 import Overture
 
-import Combine
 
 @MainActor
 final class RecognitionViewModel: ObservableObject {
     @Published var playbackMode = LottiePlaybackMode.paused(at: .progress(0))
-    @Published var text: AttributedString = "The plant was grown"
+    @Published var text: AttributedString = ""
     @Published var status = Status.stopRecognition
     
     enum Status {
@@ -33,11 +32,12 @@ final class RecognitionViewModel: ObservableObject {
         }
     }
     
-    init(_text: AttributedString = "The plant was grown") {
-        self.text = _text
+    init(chapter: Chapter) {
+        self.text = AttributedString(chapter.text)
+        self.matches = chapter.matches
     }
     
-    var speechRecognizer = SpeechRecognizer()
+    @Dependency(\.speechRecognizerClient) var speechRecognizer
     
     private var matches = ["plant", "was"]
     
@@ -58,7 +58,7 @@ final class RecognitionViewModel: ObservableObject {
     
     func bind() async {
         do {
-            for try await word in speechRecognizer.recognizedWordsStream {
+            for try await word in await speechRecognizer.recognizedSpeech() {
                 makeTextColored(recognizedWord: word)
                 matchToAnimation(recognizedWord: word)
             }
@@ -73,8 +73,8 @@ final class RecognitionViewModel: ObservableObject {
         status = .startRecognition
     }
     
-    func stopRecording()  {
-        speechRecognizer.stopRecognition()
+    func stopRecording() async  {
+        await speechRecognizer.stopRecognition()
         status = .stopRecognition
         playbackMode = .paused(at: .progress(0))
     }
@@ -116,7 +116,9 @@ struct ContentView: View {
                             await recognitonViewModel.startRecording()
                         }
                     } else {
-                        recognitonViewModel.stopRecording()
+                        Task {
+                            await recognitonViewModel.stopRecording()
+                        }
                     }
                 }
                 .overlay {
@@ -141,7 +143,7 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environmentObject(RecognitionViewModel(_text: "Hello my boy"))
+        .environmentObject(RecognitionViewModel(chapter: .helloWorld))
 }
 
 

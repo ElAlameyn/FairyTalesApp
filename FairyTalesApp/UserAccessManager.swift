@@ -8,19 +8,30 @@
 import Foundation
 import Dependencies
 import Speech
+import SwiftUI
 
 struct UserAccessManager {
     var askForSpeechRecognition: @Sendable () async -> SFSpeechRecognizerAuthorizationStatus
 }
 
 extension UserAccessManager: DependencyKey {
-    static let liveValue = UserAccessManager(askForSpeechRecognition: {
-        await withCheckedContinuation { send in
-            SFSpeechRecognizer.requestAuthorization { status in
-                send.resume(returning: status)
-            }
+    
+    static var liveValue: UserAccessManager { 
+        @AppStorage("sf_speech_status") var storedStatus: SFSpeechRecognizerAuthorizationStatus = .notDetermined
+        
+        if storedStatus != .authorized {
+            return UserAccessManager(askForSpeechRecognition: {
+                await withCheckedContinuation { send in
+                    SFSpeechRecognizer.requestAuthorization { status in
+                        @AppStorage("sf_speech_status") var storedStatus  = status
+                        send.resume(returning: status)
+                    }
+                }
+            })
+        } else  {
+            return UserAccessManager(askForSpeechRecognition: { .authorized })
         }
-    })
+    }
     
     static let testValue = UserAccessManager(askForSpeechRecognition: {
         return .restricted
@@ -28,8 +39,8 @@ extension UserAccessManager: DependencyKey {
 }
 
 extension DependencyValues {
-   var userAccessManager: UserAccessManager {
-    get { self[UserAccessManager.self] }
-    set { self[UserAccessManager.self] = newValue }
-  }
+    var userAccessManager: UserAccessManager {
+        get { self[UserAccessManager.self] }
+        set { self[UserAccessManager.self] = newValue }
+    }
 }

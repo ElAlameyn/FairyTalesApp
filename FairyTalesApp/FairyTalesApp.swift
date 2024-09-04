@@ -12,7 +12,7 @@ struct FairyTalesApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(RecognitionViewModel())
+                .environmentObject(RecognitionViewModel(chapter: .helloWorld))
         }
     }
 }

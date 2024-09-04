@@ -12,6 +12,7 @@
 		8621635A2C16EC3B0005F090 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 862163592C16EC3B0005F090 /* Dependencies */; };
 		8621635C2C16EC3B0005F090 /* DependenciesMacros in Frameworks */ = {isa = PBXBuildFile; productRef = 8621635B2C16EC3B0005F090 /* DependenciesMacros */; };
 		8621DE1F2C83AA6800242B0E /* FairyTalesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */; };
+		864749F72C88517B00B8C7D3 /* o.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864749F62C88517B00B8C7D3 /* o.swift */; };
 		865302D72C0241EF004D11C1 /* Overture in Frameworks */ = {isa = PBXBuildFile; productRef = 865302D62C0241EF004D11C1 /* Overture */; };
 		865302D92C0243F3004D11C1 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865302D82C0243F3004D11C1 /* AudioRecorder.swift */; };
 		865302DB2C02441F004D11C1 /* FileHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865302DA2C02441F004D11C1 /* FileHelpers.swift */; };
@@ -39,6 +40,7 @@
 		860277F72C3ECEF800BCC7A8 /* AVAudioSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioSession.swift; sourceTree = "<group>"; };
 		8621DE1C2C83AA6800242B0E /* FairyTalesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FairyTalesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FairyTalesTests.swift; sourceTree = "<group>"; };
+		864749F62C88517B00B8C7D3 /* o.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = o.swift; sourceTree = "<group>"; };
 		865302D82C0243F3004D11C1 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		865302DA2C02441F004D11C1 /* FileHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHelpers.swift; sourceTree = "<group>"; };
 		865302DC2C024514004D11C1 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
@@ -80,6 +82,14 @@
 			path = FairyTalesTests;
 			sourceTree = "<group>";
 		};
+		864749F82C88517D00B8C7D3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				864749F62C88517B00B8C7D3 /* o.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		866D994D2BFCAEBA00E73A8F = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +111,7 @@
 		866D99582BFCAEBA00E73A8F /* FairyTalesApp */ = {
 			isa = PBXGroup;
 			children = (
+				864749F82C88517D00B8C7D3 /* Models */,
 				867C84712C76AE1100833E5D /* Animations */,
 				866D99592BFCAEBA00E73A8F /* FairyTalesApp.swift */,
 				865302D82C0243F3004D11C1 /* AudioRecorder.swift */,
@@ -258,6 +269,7 @@
 				866D995C2BFCAEBA00E73A8F /* ContentView.swift in Sources */,
 				866D995A2BFCAEBA00E73A8F /* FairyTalesApp.swift in Sources */,
 				865302DB2C02441F004D11C1 /* FileHelpers.swift in Sources */,
+				864749F72C88517B00B8C7D3 /* o.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
