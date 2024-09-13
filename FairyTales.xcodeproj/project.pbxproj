@@ -16,6 +16,7 @@
 		8639499C2C85D79E003DFBFE /* RecognitionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8639499B2C85D79E003DFBFE /* RecognitionFeature.swift */; };
 		8639499E2C8604DF003DFBFE /* open_window_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 8639499D2C8604DF003DFBFE /* open_window_animation.json */; };
 		863949A02C86055D003DFBFE /* sun_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 8639499F2C86055D003DFBFE /* sun_animation.json */; };
+		863949A32C864697003DFBFE /* ChaptersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863949A22C864697003DFBFE /* ChaptersView.swift */; };
 		864749F72C88517B00B8C7D3 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864749F62C88517B00B8C7D3 /* Chapter.swift */; };
 		865302D72C0241EF004D11C1 /* Overture in Frameworks */ = {isa = PBXBuildFile; productRef = 865302D62C0241EF004D11C1 /* Overture */; };
 		865302D92C0243F3004D11C1 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865302D82C0243F3004D11C1 /* AudioRecorder.swift */; };
@@ -47,6 +48,7 @@
 		8639499B2C85D79E003DFBFE /* RecognitionFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionFeature.swift; sourceTree = "<group>"; };
 		8639499D2C8604DF003DFBFE /* open_window_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = open_window_animation.json; sourceTree = "<group>"; };
 		8639499F2C86055D003DFBFE /* sun_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sun_animation.json; sourceTree = "<group>"; };
+		863949A22C864697003DFBFE /* ChaptersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersView.swift; sourceTree = "<group>"; };
 		864749F62C88517B00B8C7D3 /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		865302D82C0243F3004D11C1 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		865302DA2C02441F004D11C1 /* FileHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHelpers.swift; sourceTree = "<group>"; };
@@ -90,6 +92,18 @@
 			path = FairyTalesTests;
 			sourceTree = "<group>";
 		};
+		863949A12C86466A003DFBFE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				865302D82C0243F3004D11C1 /* AudioRecorder.swift */,
+				865302DC2C024514004D11C1 /* SpeechRecognizer.swift */,
+				865302DA2C02441F004D11C1 /* FileHelpers.swift */,
+				860277F52C3ECEF800BCC7A8 /* UserAccessManager.swift */,
+				860277F72C3ECEF800BCC7A8 /* AVAudioSession.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		864749F82C88517D00B8C7D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,16 +133,13 @@
 		866D99582BFCAEBA00E73A8F /* FairyTalesApp */ = {
 			isa = PBXGroup;
 			children = (
+				863949A12C86466A003DFBFE /* Helpers */,
 				864749F82C88517D00B8C7D3 /* Models */,
 				867C84712C76AE1100833E5D /* Animations */,
 				866D99592BFCAEBA00E73A8F /* FairyTalesApp.swift */,
-				865302D82C0243F3004D11C1 /* AudioRecorder.swift */,
-				865302DC2C024514004D11C1 /* SpeechRecognizer.swift */,
-				865302DA2C02441F004D11C1 /* FileHelpers.swift */,
-				860277F52C3ECEF800BCC7A8 /* UserAccessManager.swift */,
-				860277F72C3ECEF800BCC7A8 /* AVAudioSession.swift */,
 				8639499B2C85D79E003DFBFE /* RecognitionFeature.swift */,
 				866D995B2BFCAEBA00E73A8F /* ChapterView.swift */,
+				863949A22C864697003DFBFE /* ChaptersView.swift */,
 				866D995F2BFCAEBB00E73A8F /* Preview Content */,
 				866D995D2BFCAEBB00E73A8F /* Assets.xcassets */,
 			);
@@ -281,6 +292,7 @@
 				865302D92C0243F3004D11C1 /* AudioRecorder.swift in Sources */,
 				8639499C2C85D79E003DFBFE /* RecognitionFeature.swift in Sources */,
 				860277F82C3ECEF800BCC7A8 /* AVAudioSession.swift in Sources */,
+				863949A32C864697003DFBFE /* ChaptersView.swift in Sources */,
 				860277F62C3ECEF800BCC7A8 /* UserAccessManager.swift in Sources */,
 				866D995C2BFCAEBA00E73A8F /* ChapterView.swift in Sources */,
 				866D995A2BFCAEBA00E73A8F /* FairyTalesApp.swift in Sources */,

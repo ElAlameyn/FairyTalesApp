@@ -21,7 +21,7 @@ struct RecognitionFeature {
         }
     }
     
-    enum Action {
+    enum Action: Equatable {
         case startRecording
         case stopRecording
         case bind

@@ -16,7 +16,8 @@ import ComposableArchitecture
 @Reducer
 struct ChapterFeature {
     @ObservableState
-    struct State: Equatable {
+    struct State: Equatable, Identifiable {
+        var id = UUID()
         var playbackMode = LottiePlaybackMode.paused(at: .progress(0))
         var recognitionState = RecognitionFeature.State()
         var visibleText = AttributedString("")
@@ -35,7 +36,7 @@ struct ChapterFeature {
         }
     }
     
-    enum Action {
+    enum Action: Equatable {
         case recordButtonTapped
         case recognitionFeature(RecognitionFeature.Action)
     }
@@ -161,26 +162,7 @@ struct ChapterView: View {
     ChapterView()
 }
 
-#Preview {
-    ChaptersView()
-}
 
-struct ChaptersView: View {
-    
-    var chapters: [Chapter] = Chapters.One.values
-    
-    var body: some View {
-        TabView {
-            ForEach(chapters, id: \.self) { chapter in
-                ChapterView(store:
-                        .init(initialState: .init(chapter: chapter), reducer: {
-                            ChapterFeature()
-                        }))
-            }
-        }
-        .tabViewStyle(.page(indexDisplayMode: .always))
-    }
-}
 
 // MARK: - For future time
 
