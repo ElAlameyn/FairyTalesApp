@@ -12,6 +12,7 @@ import ComposableArchitecture
 
 final class FairyTalesTests: XCTestCase {
     
+    
     @MainActor
     func testSpeechRecognitionAnimation() async throws {
         let store = TestStore(initialState: ChapterFeature.State(chapter: .helloWorld)) {
@@ -50,5 +51,29 @@ final class FairyTalesTests: XCTestCase {
         
         XCTAssert(store.state.playbackMode != .paused(at: .progress(0)))
     }
+    
+    @MainActor
+    func testCheckIfPageRead() async throws {
+        let store = TestStore(initialState: ChapterFeature.State(chapter: .helloWorld)) {
+            ChapterFeature()
+        } 
+        
+        store.exhaustivity = .off(showSkippedAssertions: true)
+        
+        await store.send(.recognitionFeature(.startRecording)) {
+            $0.recognitionState.status = .startRecognition
+        }
+        
+        await store.receive(.recognitionFeature(.bind))
+        
+        await store.receive(.recognitionFeature(.getRecognized(words: ["hello"])))
+        
+        await store.receive(.recognitionFeature(.getRecognized(words: ["world"])))
+        
+        await store.receive(.successReadPage, timeout: .seconds(1))
+        
+        XCTAssert(store.state.readingState == .success)
+    }
+    
     
 }

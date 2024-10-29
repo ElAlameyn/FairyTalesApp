@@ -18,6 +18,7 @@ struct ChapterFeature {
     @ObservableState
     struct State: Equatable, Identifiable {
         var id = UUID()
+        var readingState = ReadingState.inProcess
         var playbackMode = LottiePlaybackMode.paused(at: .progress(0))
         var recognitionState = RecognitionFeature.State()
         var visibleText = AttributedString("")
@@ -39,6 +40,7 @@ struct ChapterFeature {
     enum Action: Equatable {
         case recordButtonTapped
         case recognitionFeature(RecognitionFeature.Action)
+        case successReadPage
     }
     
     @Dependency(\.speechRecognizerClient) var speechRecognizer
@@ -56,48 +58,44 @@ struct ChapterFeature {
                     status == .stopRecognition ? await send(.recognitionFeature(.startRecording)) : await send(.recognitionFeature(.stopRecording))
                 }
                 
-            case let .recognitionFeature(.getRecognized(words: word)):
+            case let .recognitionFeature(.getRecognized(words: words)):
+                // TODO: Write another reducer 
+               let allPagesRead = StateChanger<Self>
+                    .makeTextColored(recognizedWords: words, coloredWord: { word in
+                        StateChanger<State>.matchToAnimation(recognizedWords: [word[...]]).apply(&state)
+                    })
                 
-                makeTextColored(recognizedWords: word)
-                matchToAnimation(recognizedWords: word)
-                
-                func makeTextColored(recognizedWords: [Substring]) {
-                    for word in recognizedWords {
-                        let visibleWords = String(state.visibleText.characters)
-                            .components(separatedBy: " ")
+                    .map(.matchToAnimation(recognizedWords: words))
+                    .flatMap { state in
+                        let attributed = state.visibleText
+                        let ranges = attributed.characters
+                            .split(separator: " ")
+                            .map(String.init)
+                            .compactMap { attributed.range(of: $0) }
                         
-                        for visibleWord in visibleWords {
-                            if let range = visibleWord.range(of: word, options: .caseInsensitive) {
-                                
-                                let matchedWord = visibleWord[range].count
-                                let fullCount = visibleWord.count
-                                
-                                if fullCount - matchedWord <= 3 {
-                                    state.visibleText.range(of: visibleWord[...]).map {
-                                        state.visibleText[$0].foregroundColor = .green
-                                    }
-                                }
+                        for range in ranges {
+                            if attributed[range].foregroundColor != .green {
+                                return false
                             }
                         }
-                    }
+
+                        return true
+                    }(&state)
+                
+                if allPagesRead {
+                    guard state.readingState != ReadingState.success else { return .none }
+                    
+                    state.readingState = ReadingState.success
+                    return .run { send in await send(.successReadPage) }
                 }
                 
-                func matchToAnimation(recognizedWords: [Substring]) {
-                    for word in recognizedWords {
-                        if state.matches.contains(where: { match in
-                            match.caseInsensitiveCompare(word) == .orderedSame
-                        }) {
-                            state.playbackMode = .playing(.fromProgress(0, toProgress: 1, loopMode: .playOnce))
-                        }
-                    }
-                }
             case .recognitionFeature(_): break
+            case .successReadPage: break
             }
             return .none
         }   
         
     }
-    
 }
 
 struct ChapterView: View {
@@ -162,32 +160,3 @@ struct ChapterView: View {
     ChapterView()
 }
 
-
-
-// MARK: - For future time
-
-//
-//var recordingButton: some View {
-//    Button(recordTitle) {
-//        buttonDisabled = true
-//        recordTitle = recordTitle == "Start recording" ? "Stop recording" : "Start recording"
-//        Task {
-//            if await recorder.isRecording {
-//                await recorder.stopRecording()
-//            } else {
-//                await recorder.startRecording()
-//            }
-//            buttonDisabled = false
-//        }
-//    }
-//    .animation(.easeIn)
-//    .disabled(buttonDisabled)
-//}
-//
-//var playRecorded: some View {
-//    Button("Play recorded video") {
-//        try! audioSession.setForPlayback()
-//        player.replaceCurrentItem(with: .init(url: Directory.foo))
-//        player.play()
-//    }
-//}
