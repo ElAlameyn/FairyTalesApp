@@ -30,12 +30,17 @@ struct ChaptersFeature {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .tabChanged: break
-            case let .chapters(.element(id: _, action: action)):
+            case let .tabChanged(value):
+                state.tab = value
+            case let .chapters(.element(id: id, action: action)):
                 switch action {
                 case .successReadPage:
-                    if let element = state.dequeElements.popFirst() {
-                        state.chapters.append(element)
+                    if state.chapters[id: id]?.readingState != .success {
+                        if let element = state.dequeElements.popFirst() {
+                            state.chapters.append(element)
+                            state.tab = element.id
+                        }
+                        state.chapters[id: id]?.readingState = .success
                     }
                 default: break
                 }
@@ -44,10 +49,10 @@ struct ChaptersFeature {
             return .none
                 
         }
-        ._printChanges()
         .forEach(\.chapters, action: \.chapters, element: {
             ChapterFeature()
         })
+        ._printChanges()
             
     }
 }
@@ -69,6 +74,9 @@ struct ChaptersView: View {
         .onChange(of: selection) { oldValue, newValue in
             store.send(.tabChanged(newValue))
         }
+        .onChange(of: store.tab, { oldValue, newValue in
+            selection = newValue
+        })
         .tabViewStyle(.page(indexDisplayMode: .always))
     }
 }

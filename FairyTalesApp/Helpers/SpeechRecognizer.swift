@@ -63,7 +63,7 @@ extension SpeechRecognizerClient: DependencyKey {
             textStream
                 .stream
                 .flatMap { array in
-                    let transformed = array.map { $0.split(separator: " ") }
+                    let transformed = array.map { $0.getWords() }
                     return Array(transformed).publisher.values
                 }
                 .eraseToThrowingStream()
@@ -87,8 +87,10 @@ extension SpeechRecognizerClient: DependencyKey {
             
             inputNode = audioEngine.inputNode
             speechRecognizer = SFSpeechRecognizer(locale: .init(identifier: "ru-RU"))
+//            speechRecognizer = SFSpeechRecognizer(locale: .init(identifier: "en-US"))
             
             recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+            recognitionRequest?.shouldReportPartialResults = true
             
             guard let speechRecognizer,
                   let recognitionRequest,
@@ -104,11 +106,12 @@ extension SpeechRecognizerClient: DependencyKey {
             print("Recording format: \(recordingFormat)")
             
             inputNode.removeTap(onBus: 0)
+            sleep(1)
             inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
                 recognitionRequest.append(buffer)
             }
             
-            recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { @Sendable [weak self] result, error in
+            recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] result, error in
                 
                 guard let self else { return }
                 
@@ -129,13 +132,14 @@ extension SpeechRecognizerClient: DependencyKey {
                 isRecognizing = true
             } catch {
                 print("Coudn't start audio engine!")
+                recognitionRequest.endAudio()
                 stopRecognition()
             }
         }
         
         func stopRecognition()  {
-            recognitionTask?.cancel()
-            
+            recognitionTask?.finish()
+            recognitionRequest?.endAudio()
             audioEngine.stop()
             
             inputNode?.removeTap(onBus: 0)

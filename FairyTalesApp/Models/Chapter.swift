@@ -13,7 +13,7 @@ struct Chapter: Hashable {
     var text: String
 }
 
-enum ReadingState { case success, inProcess }
+enum ReadingState { case success, inProcess, alreadySet }
 
 extension Chapter {
     static let helloWorld = Self(matches: ["hello"], text: "hello world")
@@ -25,8 +25,8 @@ enum Chapters {}
 extension Chapters {
     enum One {
         static let values = [
-            Chapter(animatinonName: "open_window_animation", matches: ["окно"], text: "Я купил окно"),
-            Chapter(animatinonName: "sun_animation", matches: ["солнце"], text: "Солнце осветило комнату"),
+            Chapter(animatinonName: "open_window_animation", matches: ["окно"], text: "Я открыл окно"),
+            Chapter(animatinonName: "sun_animation", matches: ["свет"], text: "Да будет свет!"),
             Chapter.plantWasGrown
         ].map(ChapterFeature.State.init(chapter:))
     }

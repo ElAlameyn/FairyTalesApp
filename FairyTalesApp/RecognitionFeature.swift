@@ -51,7 +51,7 @@ struct RecognitionFeature {
                         await send(.getRecognized(words: words))
                     }
                 } catch: { error, send in
-                    print(error.localizedDescription)
+                    print("Binding audio error: ", error.localizedDescription)
                 }
                 
             case .getRecognized(words: _):

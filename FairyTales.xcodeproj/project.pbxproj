@@ -29,7 +29,7 @@
 		867C84702C76ADF400833E5D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 867C846F2C76ADF400833E5D /* Lottie */; };
 		867C84732C76AE1A00833E5D /* plant_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 867C84722C76AE1A00833E5D /* plant_animation.json */; };
 		CD5C4E092CBBF76800DBB6E2 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = CD5C4E082CBBF76800DBB6E2 /* DequeModule */; };
-		CD5C4E0B2CBC4D2500DBB6E2 /* StateChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5C4E0A2CBC4D2500DBB6E2 /* StateChanger.swift */; };
+		CDD6B6862CD4FBFB007E503A /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD6B6852CD4FBFB007E503A /* Collection+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +61,7 @@
 		866D995D2BFCAEBB00E73A8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		866D99602BFCAEBB00E73A8F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		867C84722C76AE1A00833E5D /* plant_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plant_animation.json; sourceTree = "<group>"; };
-		CD5C4E0A2CBC4D2500DBB6E2 /* StateChanger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateChanger.swift; sourceTree = "<group>"; };
+		CDD6B6852CD4FBFB007E503A /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,9 +142,9 @@
 				867C84712C76AE1100833E5D /* Animations */,
 				866D99592BFCAEBA00E73A8F /* FairyTalesApp.swift */,
 				8639499B2C85D79E003DFBFE /* RecognitionFeature.swift */,
-				CD5C4E0A2CBC4D2500DBB6E2 /* StateChanger.swift */,
 				866D995B2BFCAEBA00E73A8F /* ChapterView.swift */,
 				863949A22C864697003DFBFE /* ChaptersView.swift */,
+				CDD6B6852CD4FBFB007E503A /* Collection+Extension.swift */,
 				866D995F2BFCAEBB00E73A8F /* Preview Content */,
 				866D995D2BFCAEBB00E73A8F /* Assets.xcassets */,
 			);
@@ -296,12 +296,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				865302DD2C024514004D11C1 /* SpeechRecognizer.swift in Sources */,
+				CDD6B6862CD4FBFB007E503A /* Collection+Extension.swift in Sources */,
 				865302D92C0243F3004D11C1 /* AudioRecorder.swift in Sources */,
 				8639499C2C85D79E003DFBFE /* RecognitionFeature.swift in Sources */,
 				860277F82C3ECEF800BCC7A8 /* AVAudioSession.swift in Sources */,
 				863949A32C864697003DFBFE /* ChaptersView.swift in Sources */,
 				860277F62C3ECEF800BCC7A8 /* UserAccessManager.swift in Sources */,
-				CD5C4E0B2CBC4D2500DBB6E2 /* StateChanger.swift in Sources */,
 				866D995C2BFCAEBA00E73A8F /* ChapterView.swift in Sources */,
 				866D995A2BFCAEBA00E73A8F /* FairyTalesApp.swift in Sources */,
 				865302DB2C02441F004D11C1 /* FileHelpers.swift in Sources */,
