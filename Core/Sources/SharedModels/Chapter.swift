@@ -7,28 +7,27 @@
 
 import Foundation
 
-struct Chapter: Hashable {
-    var animatinonName: String = ""
-    var matches: [String]
-    var text: String
+public struct Chapter: Hashable {
+    public var animatinonName: String = ""
+    public var matches: [String]
+    public var text: String
 }
 
-enum ReadingState { case success, inProcess, alreadySet }
+public enum ReadingState { case success, inProcess, alreadySet }
 
-extension Chapter {
+public extension Chapter {
     static let helloWorld = Self(matches: ["hello"], text: "hello world")
     static let plantWasGrown = Self(animatinonName: "plant_animation", matches: ["растение", "выросло"], text: "Растение выросло")
 }
 
-enum Chapters {}
+public enum Chapters {}
 
-extension Chapters {
-    enum One {
-        static let values = [
+public extension Chapters {
+     enum One {
+         public static let values = [
             Chapter(animatinonName: "open_window_animation", matches: ["окно"], text: "Я открыл окно"),
             Chapter(animatinonName: "sun_animation", matches: ["свет"], text: "Да будет свет!"),
             Chapter.plantWasGrown
-        ].map(ChapterFeature.State.init(chapter:))
+        ]
     }
 }
-

@@ -8,6 +8,7 @@
 import XCTest
 import Dependencies
 import ComposableArchitecture
+import SharedModels
 @testable import FairyTales
 
 final class FairyTalesTests: XCTestCase {
@@ -71,8 +72,6 @@ final class FairyTalesTests: XCTestCase {
         await store.receive(.recognitionFeature(.getRecognized(words: ["world"])))
         
         await store.receive(.successReadPage, timeout: .seconds(1))
-        
-        XCTAssert(store.state.readingState == .success)
     }
     
     

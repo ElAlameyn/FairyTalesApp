@@ -12,6 +12,13 @@ extension String {
         self
             .components(separatedBy: .whitespacesAndNewlines)
             .map { $0[...] }
-    }
+    }   
 }
 
+extension [String] {
+    func containsCaseInsesitiveMatch<T: StringProtocol>(_ word: T) -> Bool {
+        self.contains(where: { match in
+            match.caseInsensitiveCompare(word) == .orderedSame
+        })
+    }
+}

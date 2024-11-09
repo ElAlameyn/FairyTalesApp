@@ -11,6 +11,10 @@ import Dependencies
 import Lottie
 import Overture
 import SwiftUI
+import SharedModels
+
+// TODO: Fix bug with double recognition
+// TODO: Show success read state
 
 @Reducer
 struct ChapterFeature {
@@ -71,11 +75,7 @@ struct ChapterFeature {
                 
             case .recognitionFeature: break
             case .successReadPage: break
-//                if state.readingState == .success {
-//                    state.readingState = .alreadySet
-//                }
             case let .makeTextColored(recognizedWords):
-                var effects = [EffectOf<Self>]()
                 for word in recognizedWords {
                     let visibleWords = String(state.visibleText.characters)
                         .getWords()
@@ -89,27 +89,20 @@ struct ChapterFeature {
                                 state.visibleText.range(of: visibleWord[...]).map {
                                     state.visibleText[$0].foregroundColor = .green
                                 }
-                                effects.append(
-                                    .run { send in
-                                        await send(.matchToAnimation(recognizedWords: [visibleWord[...]]))
-                                    }
-                                )
+                                
+                                if state.matches.containsCaseInsesitiveMatch(visibleWord) {
+                                    state.playbackMode = .playing(.fromProgress(0, toProgress: 1, loopMode: .playOnce))
+                                }
                             }
                         }
                     }
                 }
                 
-                let result = effects.reduce(Effect.none) { result, element in
-                    EffectOf<Self>.merge(result, element)
-                }
-                
-                return .merge(result, .run { await $0(.checkIfAllRead) })
+                return .run { await $0(.checkIfAllRead) }
                 
             case let .matchToAnimation(recognizedWords):
                 for word in recognizedWords {
-                    if state.matches.contains(where: { match in
-                        match.caseInsensitiveCompare(word) == .orderedSame
-                    }) {
+                    if state.matches.containsCaseInsesitiveMatch(word) {
                         state.playbackMode = .playing(.fromProgress(0, toProgress: 1, loopMode: .playOnce))
                     }
                 }

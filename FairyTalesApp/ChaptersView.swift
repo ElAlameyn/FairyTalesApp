@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import SwiftUI
 import DequeModule
+import SharedModels
 
 @Reducer
 struct ChaptersFeature {
@@ -16,8 +17,10 @@ struct ChaptersFeature {
         var tab: UUID = .init()
         var isLoad = false
         var readingState = ReadingState.inProcess
-        var dequeElements = Deque(Chapters.One.values.dropFirst())
-        var chapters = IdentifiedArray(uniqueElements: [Chapters.One.values.first!])
+        var dequeElements = Deque(values.dropFirst())
+        var chapters = IdentifiedArray(uniqueElements: [values.first!])
+        
+        private static let values = Chapters.One.values.map(ChapterFeature.State.init(chapter:))
     }
 
     enum Action {
@@ -47,7 +50,6 @@ struct ChaptersFeature {
             case .chapters: break
             }
             return .none
-                
         }
         .forEach(\.chapters, action: \.chapters, element: {
             ChapterFeature()

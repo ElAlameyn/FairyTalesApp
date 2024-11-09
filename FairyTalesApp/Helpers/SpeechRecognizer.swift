@@ -135,6 +135,7 @@ extension SpeechRecognizerClient: DependencyKey {
                 recognitionRequest.endAudio()
                 stopRecognition()
             }
+            
         }
         
         func stopRecognition()  {
