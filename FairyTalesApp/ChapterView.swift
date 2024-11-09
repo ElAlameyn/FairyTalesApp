@@ -10,11 +10,12 @@ import ComposableArchitecture
 import Dependencies
 import Lottie
 import Overture
-import SwiftUI
 import SharedModels
+import SwiftUI
 
 // TODO: Fix bug with double recognition
-// TODO: Show success read state
+// TODO: Show success read state (confetti)
+// TODO: Create constructor of fairy tales
 
 @Reducer
 struct ChapterFeature {
@@ -60,9 +61,9 @@ struct ChapterFeature {
             switch action {
             case .recordButtonTapped:
                 return .run { [status = state.recognitionState.status] send in
-                    status == .stopRecognition 
-                    ? await send(.recognitionFeature(.startRecording))
-                    : await send(.recognitionFeature(.stopRecording))
+                    status == .stopRecognition
+                        ? await send(.recognitionFeature(.startRecording))
+                        : await send(.recognitionFeature(.stopRecording))
                 }
                 
             case let .recognitionFeature(.getRecognized(words: words)):
@@ -118,7 +119,7 @@ struct ChapterFeature {
                     }
                 }
                 
-                return .run { send in await send(.successReadPage)}
+                return .run { send in await send(.successReadPage) }
             }
             return .none
         }
@@ -144,41 +145,53 @@ struct ChapterView: View {
     }
     
     var body: some View {
-        VStack {
-            LottieView(animation: .named(store.animationName))
-                .playbackMode(store.playbackMode)
+        ZStack {
+            GeometryReader { proxy in
+                VStack(spacing: 40) {
+                    LottieView(animation: .named(store.animationName))
+                        .playbackMode(store.playbackMode)
+                        .frame(height: proxy.size.height / 2)
+
+                    Text(store.visibleText)
+                
+                    Spacer().frame(height: proxy.size.height / 2.5)
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
             
-            Text(store.visibleText)
-            
-            Spacer()
-                .frame(height: 30)
-            
-            Circle()
-                .frame(width: 40, height: 40)
-                .scaleEffect(isPressed ? 1.5 : 1)
-                .transition(.scale)
-                .foregroundStyle(.red)
+                Group {
+                    if store.recognitionState.status == .startRecognition {
+                        Image(systemName: "waveform.circle")
+                            .font(.system(size: recordIconSize))
+                            .symbolEffect(.variableColor.iterative.hideInactiveLayers.reversing)
+                    } else {
+                        Image(systemName: "record.circle.fill")
+                            .font(.system(size: recordIconSize))
+                    }
+                }
                 .onTapGesture {
-                    withAnimation {
-                        isPressed.toggle()
-                    }
-                    store.send(.recordButtonTapped)
+                    store.send(.recordButtonTapped, animation: .easeIn)
                 }
-                .overlay {
-                    if isPressed {
-                        Circle()
-                            .foregroundStyle(.white)
-                            .transition(.scale)
-                            .frame(width: 25, height: 25)
-                    }
-                }
-            
-            Spacer().frame(height: 40)
+                .foregroundStyle(.green)
+                .symbolRenderingMode(.monochrome)
+                .offset(y: proxy.size.height - bottomPadding)
+                .frame(maxWidth: .infinity)
+            }
         }
-        .padding()
     }
 }
 
+private let recordIconSize: CGFloat = 60
+private let bottomPadding: CGFloat = 120
+
 #Preview {
-    ChapterView()
+    ChapterView(store: .init(initialState: .init(chapter: .sunAnimation), reducer: {
+        EmptyReducer()
+    }))
+}
+
+#Preview {
+    ChapterView(store: .init(initialState: .init(chapter: .plantWasGrown), reducer: {
+        EmptyReducer()
+    }))
 }

@@ -18,6 +18,7 @@ public enum ReadingState { case success, inProcess, alreadySet }
 public extension Chapter {
     static let helloWorld = Self(matches: ["hello"], text: "hello world")
     static let plantWasGrown = Self(animatinonName: "plant_animation", matches: ["растение", "выросло"], text: "Растение выросло")
+    static let sunAnimation = Chapter(animatinonName: "sun_animation", matches: ["свет"], text: "Да будет свет!")
 }
 
 public enum Chapters {}

@@ -44,6 +44,8 @@ struct ChaptersFeature {
                             state.tab = element.id
                         }
                         state.chapters[id: id]?.readingState = .success
+                        
+                        return .send(.chapters(.element(id: id, action: .recognitionFeature(.stopRecording))))
                     }
                 default: break
                 }
@@ -77,7 +79,9 @@ struct ChaptersView: View {
             store.send(.tabChanged(newValue))
         }
         .onChange(of: store.tab, { oldValue, newValue in
-            selection = newValue
+            withAnimation {
+                selection = newValue
+            }
         })
         .tabViewStyle(.page(indexDisplayMode: .always))
     }
