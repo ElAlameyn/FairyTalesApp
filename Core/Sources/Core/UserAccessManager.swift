@@ -5,18 +5,17 @@
 //  Created by Artiom Kalinkin on 01.07.2024.
 //
 
-import Foundation
-import Dependencies
 import Speech
 import SwiftUI
+import ComposableArchitecture
 
-struct UserAccessManager {
-    var askForSpeechRecognition: @Sendable () async -> SFSpeechRecognizerAuthorizationStatus
+public struct UserAccessManager {
+    public var askForSpeechRecognition: @Sendable () async -> SFSpeechRecognizerAuthorizationStatus
 }
 
 extension UserAccessManager: DependencyKey {
     
-    static var liveValue: UserAccessManager { 
+    public static var liveValue: UserAccessManager {
         @AppStorage("sf_speech_status") var storedStatus: SFSpeechRecognizerAuthorizationStatus = .notDetermined
         
         if storedStatus != .authorized {
@@ -33,13 +32,13 @@ extension UserAccessManager: DependencyKey {
         }
     }
     
-    static let testValue = UserAccessManager(askForSpeechRecognition: {
+    public static let testValue = UserAccessManager(askForSpeechRecognition: {
         return .restricted
     })
 }
 
 extension DependencyValues {
-    var userAccessManager: UserAccessManager {
+    public var userAccessManager: UserAccessManager {
         get { self[UserAccessManager.self] }
         set { self[UserAccessManager.self] = newValue }
     }

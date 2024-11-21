@@ -6,22 +6,28 @@
 //
 
 import ComposableArchitecture
+import Core
 import SwiftUI
 
 @Reducer
-struct RecognitionFeature {
+public struct RecognitionFeature {
+    
+    public init() {}
+    
     @ObservableState
-    struct State: Equatable {
-        var text: String = ""
-        var status = Status.stopRecognition
+    public struct State: Equatable {
+        public var text: String = ""
+        public var status = Status.stopRecognition
         
-        enum Status {
+        public init() {}
+        
+        public enum Status {
             case startRecognition
             case stopRecognition
         }
     }
     
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case startRecording
         case stopRecording
         case bind
@@ -30,7 +36,7 @@ struct RecognitionFeature {
     
     @Dependency(\.speechRecognizerClient) var speechRecognizer
     
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         Reduce { state, action in
             
             switch action {

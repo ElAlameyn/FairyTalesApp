@@ -7,41 +7,44 @@
 
 import AVFoundation
 import ComposableArchitecture
-import Dependencies
 import Lottie
 import Overture
 import SharedModels
 import SwiftUI
+import RecognitionFeature
 
 // TODO: Fix bug with double recognition
 // TODO: Show success read state (confetti)
 // TODO: Create constructor of fairy tales
 
 @Reducer
-struct ChapterFeature {
+public struct ChapterFeature {
+    
+    public init() {}
+    
     @ObservableState
-    struct State: Equatable, Identifiable {
-        var id = UUID()
-        var readingState = ReadingState.inProcess
-        var playbackMode = LottiePlaybackMode.paused(at: .progress(0))
-        var recognitionState = RecognitionFeature.State()
-        var visibleText = AttributedString("")
-        var matches = [String]()
-        var animationName: String = ""
+    public struct State: Equatable, Identifiable {
+        public var id = UUID()
+        public var readingState = ReadingState.inProcess
+        public var playbackMode = LottiePlaybackMode.paused(at: .progress(0))
+        public var recognitionState = RecognitionFeature.State()
+        public var visibleText = AttributedString("")
+        public var matches = [String]()
+        public var animationName: String = ""
         
-        init(chapter: Chapter) {
+        public init(chapter: Chapter) {
             self.visibleText = AttributedString(chapter.text)
             self.matches = chapter.matches
             self.animationName = chapter.animatinonName
         }
         
-        enum Status {
+        public enum Status {
             case startRecognition
             case stopRecognition
         }
     }
     
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case recordButtonTapped
         case recognitionFeature(RecognitionFeature.Action)
         case successReadPage
@@ -52,7 +55,7 @@ struct ChapterFeature {
     
     @Dependency(\.speechRecognizerClient) var speechRecognizer
     
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         Scope(state: \.recognitionState, action: \.recognitionFeature) {
             RecognitionFeature()
         }
@@ -67,8 +70,6 @@ struct ChapterFeature {
                 }
                 
             case let .recognitionFeature(.getRecognized(words: words)):
-                // TODO: Write another reducer
-                
                 return .run { send in
                     await send(.makeTextColored(recognizedWords: words))
                     await send(.matchToAnimation(recognizedWords: words))
@@ -126,17 +127,17 @@ struct ChapterFeature {
     }
 }
 
-struct ChapterView: View {
+public struct ChapterView: View {
     @State var isPressed = false
     
     var store: StoreOf<ChapterFeature>
     
-    init(store: StoreOf<ChapterFeature>) {
+    public init(store: StoreOf<ChapterFeature>) {
         self.init(isInitedStore: false)
         self.store = store
     }
     
-    init(isInitedStore: Bool = true) {
+    public init(isInitedStore: Bool = true) {
         self.store = .init(initialState: .init(chapter: .plantWasGrown), reducer: {
             ChapterFeature()
         })
@@ -144,13 +145,13 @@ struct ChapterView: View {
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.3)
     }
     
-    var body: some View {
+    public var body: some View {
         ZStack {
             GeometryReader { proxy in
                 VStack(spacing: 40) {
-                    LottieView(animation: .named(store.animationName))
-                        .playbackMode(store.playbackMode)
-                        .frame(height: proxy.size.height / 2)
+                    
+                    LottieView(animation: .named(store.animationName, bundle: .module)) .playbackMode(store.playbackMode) .frame(height: proxy.size.height / 2)
+                    
 
                     Text(store.visibleText)
                 

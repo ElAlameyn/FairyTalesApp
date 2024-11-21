@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension String {
+public extension String {
     func getWords() -> [Substring] {
         self
             .components(separatedBy: .whitespacesAndNewlines)
@@ -15,7 +15,7 @@ extension String {
     }   
 }
 
-extension [String] {
+public extension [String] {
     func containsCaseInsesitiveMatch<T: StringProtocol>(_ word: T) -> Bool {
         self.contains(where: { match in
             match.caseInsensitiveCompare(word) == .orderedSame

@@ -8,29 +8,33 @@
 import ComposableArchitecture
 import SwiftUI
 import DequeModule
+import ChapterFeature
 import SharedModels
 
 @Reducer
-struct ChaptersFeature {
+public struct ChaptersFeature {
+    
+    public init() {}
+    
     @ObservableState
-    struct State {
-        var tab: UUID = .init()
-        var isLoad = false
-        var readingState = ReadingState.inProcess
-        var dequeElements = Deque(values.dropFirst())
-        var chapters = IdentifiedArray(uniqueElements: [values.first!])
+    public struct State {
+        public var tab: UUID = .init()
+        public var isLoad = false
+        public var readingState = ReadingState.inProcess
+        public var dequeElements = Deque(values.dropFirst())
+        public var chapters = IdentifiedArray(uniqueElements: [values.first!])
         
         private static let values = Chapters.One.values.map(ChapterFeature.State.init(chapter:))
     }
 
-    enum Action {
+    public enum Action {
         case tabChanged(UUID)
         case chapters(IdentifiedAction<UUID, ChapterFeature.Action>)
     }
 
-    enum Cancel: Hashable { case foo }
+    public enum Cancel: Hashable { case foo }
 
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case let .tabChanged(value):
@@ -61,14 +65,16 @@ struct ChaptersFeature {
     }
 }
 
-struct ChaptersView: View {
+public struct ChaptersView: View {
     @Bindable var store: StoreOf<ChaptersFeature> = .init(initialState: .init()) {
         ChaptersFeature()
     }
 
     @State var selection: UUID = .init()
+    
+    public init() {}
 
-    var body: some View {
+    public var body: some View {
         TabView(selection: $selection) {
             ForEach(store.scope(state: \.chapters, action: \.chapters)) { localStore in
                 ChapterView(store: localStore)

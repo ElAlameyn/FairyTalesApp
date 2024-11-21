@@ -7,28 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8621635A2C16EC3B0005F090 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 862163592C16EC3B0005F090 /* Dependencies */; };
-		8621635C2C16EC3B0005F090 /* DependenciesMacros in Frameworks */ = {isa = PBXBuildFile; productRef = 8621635B2C16EC3B0005F090 /* DependenciesMacros */; };
 		8621DE1F2C83AA6800242B0E /* FairyTalesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */; };
-		8639499A2C85C6FB003DFBFE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 863949992C85C6FB003DFBFE /* ComposableArchitecture */; };
-		865302D72C0241EF004D11C1 /* Overture in Frameworks */ = {isa = PBXBuildFile; productRef = 865302D62C0241EF004D11C1 /* Overture */; };
-		867C84702C76ADF400833E5D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 867C846F2C76ADF400833E5D /* Lottie */; };
-		CD5C4E092CBBF76800DBB6E2 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = CD5C4E082CBBF76800DBB6E2 /* DequeModule */; };
-		CD6A70F52CDEB0BF005E69CA /* open_window_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = CD6A70E02CDEB0BF005E69CA /* open_window_animation.json */; };
-		CD6A70F62CDEB0BF005E69CA /* plant_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = CD6A70E12CDEB0BF005E69CA /* plant_animation.json */; };
-		CD6A70F72CDEB0BF005E69CA /* sun_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = CD6A70E22CDEB0BF005E69CA /* sun_animation.json */; };
+		CD34771D2CEF535B00C3E714 /* ChaptersFeature in Frameworks */ = {isa = PBXBuildFile; productRef = CD34771C2CEF535B00C3E714 /* ChaptersFeature */; };
 		CD6A70F82CDEB0BF005E69CA /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70E42CDEB0BF005E69CA /* AudioRecorder.swift */; };
-		CD6A70F92CDEB0BF005E69CA /* AVAudioSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70E52CDEB0BF005E69CA /* AVAudioSession.swift */; };
 		CD6A70FA2CDEB0BF005E69CA /* FileHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70E62CDEB0BF005E69CA /* FileHelpers.swift */; };
-		CD6A70FB2CDEB0BF005E69CA /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70E72CDEB0BF005E69CA /* SpeechRecognizer.swift */; };
-		CD6A70FC2CDEB0BF005E69CA /* UserAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70E82CDEB0BF005E69CA /* UserAccessManager.swift */; };
 		CD6A70FE2CDEB0BF005E69CA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD6A70EC2CDEB0BF005E69CA /* Preview Assets.xcassets */; };
 		CD6A70FF2CDEB0BF005E69CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD6A70EE2CDEB0BF005E69CA /* Assets.xcassets */; };
-		CD6A71002CDEB0BF005E69CA /* ChaptersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70EF2CDEB0BF005E69CA /* ChaptersView.swift */; };
-		CD6A71012CDEB0BF005E69CA /* ChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70F02CDEB0BF005E69CA /* ChapterView.swift */; };
-		CD6A71022CDEB0BF005E69CA /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70F12CDEB0BF005E69CA /* Collection+Extension.swift */; };
 		CD6A71032CDEB0BF005E69CA /* FairyTalesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70F22CDEB0BF005E69CA /* FairyTalesApp.swift */; };
-		CD6A71042CDEB0BF005E69CA /* RecognitionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70F32CDEB0BF005E69CA /* RecognitionFeature.swift */; };
 		CDD6908E2CDEB53900F43532 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = CDD6908D2CDEB53900F43532 /* Core */; };
 		CDD690902CDEB53900F43532 /* SharedModels in Frameworks */ = {isa = PBXBuildFile; productRef = CDD6908F2CDEB53900F43532 /* SharedModels */; };
 /* End PBXBuildFile section */
@@ -48,21 +33,11 @@
 		8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FairyTalesTests.swift; sourceTree = "<group>"; };
 		866D99562BFCAEBA00E73A8F /* FairyTales.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FairyTales.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD224D732CDEB2500072C103 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Core; sourceTree = SOURCE_ROOT; };
-		CD6A70E02CDEB0BF005E69CA /* open_window_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = open_window_animation.json; sourceTree = "<group>"; };
-		CD6A70E12CDEB0BF005E69CA /* plant_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plant_animation.json; sourceTree = "<group>"; };
-		CD6A70E22CDEB0BF005E69CA /* sun_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sun_animation.json; sourceTree = "<group>"; };
 		CD6A70E42CDEB0BF005E69CA /* AudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
-		CD6A70E52CDEB0BF005E69CA /* AVAudioSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVAudioSession.swift; sourceTree = "<group>"; };
 		CD6A70E62CDEB0BF005E69CA /* FileHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHelpers.swift; sourceTree = "<group>"; };
-		CD6A70E72CDEB0BF005E69CA /* SpeechRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
-		CD6A70E82CDEB0BF005E69CA /* UserAccessManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccessManager.swift; sourceTree = "<group>"; };
 		CD6A70EC2CDEB0BF005E69CA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CD6A70EE2CDEB0BF005E69CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CD6A70EF2CDEB0BF005E69CA /* ChaptersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChaptersView.swift; sourceTree = "<group>"; };
-		CD6A70F02CDEB0BF005E69CA /* ChapterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterView.swift; sourceTree = "<group>"; };
-		CD6A70F12CDEB0BF005E69CA /* Collection+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 		CD6A70F22CDEB0BF005E69CA /* FairyTalesApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FairyTalesApp.swift; sourceTree = "<group>"; };
-		CD6A70F32CDEB0BF005E69CA /* RecognitionFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecognitionFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,13 +52,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8639499A2C85C6FB003DFBFE /* ComposableArchitecture in Frameworks */,
-				865302D72C0241EF004D11C1 /* Overture in Frameworks */,
-				8621635A2C16EC3B0005F090 /* Dependencies in Frameworks */,
-				8621635C2C16EC3B0005F090 /* DependenciesMacros in Frameworks */,
-				867C84702C76ADF400833E5D /* Lottie in Frameworks */,
 				CDD6908E2CDEB53900F43532 /* Core in Frameworks */,
-				CD5C4E092CBBF76800DBB6E2 /* DequeModule in Frameworks */,
+				CD34771D2CEF535B00C3E714 /* ChaptersFeature in Frameworks */,
 				CDD690902CDEB53900F43532 /* SharedModels in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -117,24 +87,11 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CD6A70E32CDEB0BF005E69CA /* Animations */ = {
-			isa = PBXGroup;
-			children = (
-				CD6A70E02CDEB0BF005E69CA /* open_window_animation.json */,
-				CD6A70E12CDEB0BF005E69CA /* plant_animation.json */,
-				CD6A70E22CDEB0BF005E69CA /* sun_animation.json */,
-			);
-			path = Animations;
-			sourceTree = "<group>";
-		};
 		CD6A70E92CDEB0BF005E69CA /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				CD6A70E42CDEB0BF005E69CA /* AudioRecorder.swift */,
-				CD6A70E52CDEB0BF005E69CA /* AVAudioSession.swift */,
 				CD6A70E62CDEB0BF005E69CA /* FileHelpers.swift */,
-				CD6A70E72CDEB0BF005E69CA /* SpeechRecognizer.swift */,
-				CD6A70E82CDEB0BF005E69CA /* UserAccessManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -151,15 +108,10 @@
 			isa = PBXGroup;
 			children = (
 				CD224D732CDEB2500072C103 /* Core */,
-				CD6A70E32CDEB0BF005E69CA /* Animations */,
 				CD6A70E92CDEB0BF005E69CA /* Helpers */,
 				CD6A70ED2CDEB0BF005E69CA /* Preview Content */,
 				CD6A70EE2CDEB0BF005E69CA /* Assets.xcassets */,
-				CD6A70EF2CDEB0BF005E69CA /* ChaptersView.swift */,
-				CD6A70F02CDEB0BF005E69CA /* ChapterView.swift */,
-				CD6A70F12CDEB0BF005E69CA /* Collection+Extension.swift */,
 				CD6A70F22CDEB0BF005E69CA /* FairyTalesApp.swift */,
-				CD6A70F32CDEB0BF005E69CA /* RecognitionFeature.swift */,
 			);
 			path = FairyTalesApp;
 			sourceTree = "<group>";
@@ -199,14 +151,9 @@
 			);
 			name = FairyTales;
 			packageProductDependencies = (
-				865302D62C0241EF004D11C1 /* Overture */,
-				862163592C16EC3B0005F090 /* Dependencies */,
-				8621635B2C16EC3B0005F090 /* DependenciesMacros */,
-				867C846F2C76ADF400833E5D /* Lottie */,
-				863949992C85C6FB003DFBFE /* ComposableArchitecture */,
-				CD5C4E082CBBF76800DBB6E2 /* DequeModule */,
 				CDD6908D2CDEB53900F43532 /* Core */,
 				CDD6908F2CDEB53900F43532 /* SharedModels */,
+				CD34771C2CEF535B00C3E714 /* ChaptersFeature */,
 			);
 			productName = FairyTalesApp;
 			productReference = 866D99562BFCAEBA00E73A8F /* FairyTales.app */;
@@ -241,11 +188,6 @@
 			);
 			mainGroup = 866D994D2BFCAEBA00E73A8F;
 			packageReferences = (
-				865302D52C0241EF004D11C1 /* XCRemoteSwiftPackageReference "swift-overture" */,
-				862163582C16EC3B0005F090 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
-				867C846E2C76ADF400833E5D /* XCRemoteSwiftPackageReference "lottie-spm" */,
-				863949982C85C6FB003DFBFE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				CD5C4E072CBBF76800DBB6E2 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				CDD6908C2CDEB53900F43532 /* XCLocalSwiftPackageReference "Core" */,
 			);
 			productRefGroup = 866D99572BFCAEBA00E73A8F /* Products */;
@@ -271,9 +213,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD6A70FE2CDEB0BF005E69CA /* Preview Assets.xcassets in Resources */,
-				CD6A70F62CDEB0BF005E69CA /* plant_animation.json in Resources */,
-				CD6A70F52CDEB0BF005E69CA /* open_window_animation.json in Resources */,
-				CD6A70F72CDEB0BF005E69CA /* sun_animation.json in Resources */,
 				CD6A70FF2CDEB0BF005E69CA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,15 +232,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD6A70FC2CDEB0BF005E69CA /* UserAccessManager.swift in Sources */,
 				CD6A70FA2CDEB0BF005E69CA /* FileHelpers.swift in Sources */,
-				CD6A71002CDEB0BF005E69CA /* ChaptersView.swift in Sources */,
 				CD6A71032CDEB0BF005E69CA /* FairyTalesApp.swift in Sources */,
-				CD6A71042CDEB0BF005E69CA /* RecognitionFeature.swift in Sources */,
-				CD6A70FB2CDEB0BF005E69CA /* SpeechRecognizer.swift in Sources */,
-				CD6A70F92CDEB0BF005E69CA /* AVAudioSession.swift in Sources */,
-				CD6A71012CDEB0BF005E69CA /* ChapterView.swift in Sources */,
-				CD6A71022CDEB0BF005E69CA /* Collection+Extension.swift in Sources */,
 				CD6A70F82CDEB0BF005E69CA /* AudioRecorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -571,79 +503,10 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		862163582C16EC3B0005F090 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.0;
-			};
-		};
-		863949982C85C6FB003DFBFE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.14.0;
-			};
-		};
-		865302D52C0241EF004D11C1 /* XCRemoteSwiftPackageReference "swift-overture" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-overture";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.0;
-			};
-		};
-		867C846E2C76ADF400833E5D /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.5.0;
-			};
-		};
-		CD5C4E072CBBF76800DBB6E2 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-collections.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.4;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		862163592C16EC3B0005F090 /* Dependencies */ = {
+		CD34771C2CEF535B00C3E714 /* ChaptersFeature */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 862163582C16EC3B0005F090 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
-			productName = Dependencies;
-		};
-		8621635B2C16EC3B0005F090 /* DependenciesMacros */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 862163582C16EC3B0005F090 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
-			productName = DependenciesMacros;
-		};
-		863949992C85C6FB003DFBFE /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 863949982C85C6FB003DFBFE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
-		};
-		865302D62C0241EF004D11C1 /* Overture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 865302D52C0241EF004D11C1 /* XCRemoteSwiftPackageReference "swift-overture" */;
-			productName = Overture;
-		};
-		867C846F2C76ADF400833E5D /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 867C846E2C76ADF400833E5D /* XCRemoteSwiftPackageReference "lottie-spm" */;
-			productName = Lottie;
-		};
-		CD5C4E082CBBF76800DBB6E2 /* DequeModule */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CD5C4E072CBBF76800DBB6E2 /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = DequeModule;
+			productName = ChaptersFeature;
 		};
 		CDD6908D2CDEB53900F43532 /* Core */ = {
 			isa = XCSwiftPackageProductDependency;

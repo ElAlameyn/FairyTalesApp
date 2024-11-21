@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ChaptersFeature
 
 @main
 struct FairyTalesApp: App {

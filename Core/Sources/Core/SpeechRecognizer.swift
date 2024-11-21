@@ -5,29 +5,26 @@
 //  Created by Artiom Kalinkin on 25.05.2024.
 //
 
-import Foundation
 import AVFoundation
+import ComposableArchitecture
+import SharedModels
 import Speech
-import Overture
-import Dependencies
 
-
-struct SpeechRecognizerClient {
-    var recognizedSpeech: @Sendable () async -> AsyncThrowingStream<[Substring], Error>
-    var startRecognition: @Sendable () async -> Void
-    var stopRecognition: @Sendable () async -> Void
+public struct SpeechRecognizerClient {
+    public var recognizedSpeech: @Sendable () async -> AsyncThrowingStream<[Substring], Error>
+    public var startRecognition: @Sendable () async -> Void
+    public var stopRecognition: @Sendable () async -> Void
 }
 
-
-extension DependencyValues {
-   var speechRecognizerClient: SpeechRecognizerClient {
-    get { self[SpeechRecognizerClient.self] }
-    set { self[SpeechRecognizerClient.self] = newValue }
-  }
+public extension DependencyValues {
+    var speechRecognizerClient: SpeechRecognizerClient {
+        get { self[SpeechRecognizerClient.self] }
+        set { self[SpeechRecognizerClient.self] = newValue }
+    }
 }
 
 extension SpeechRecognizerClient: DependencyKey {
-    static var liveValue: SpeechRecognizerClient {
+    public static var liveValue: SpeechRecognizerClient {
         let speechRecognizer = SpeechRecognizer()
         return Self {
             await speechRecognizer.recognizedWordsStream
@@ -38,14 +35,14 @@ extension SpeechRecognizerClient: DependencyKey {
         }
     }
     
-    static var testValue: SpeechRecognizerClient {
+    public static var testValue: SpeechRecognizerClient {
         return Self {
             AsyncThrowingStream { continuation in
                 continuation.yield(["hello"])
                 continuation.yield(["world"])
                 continuation.finish()
             }
-        } startRecognition: { } stopRecognition: { }
+        } startRecognition: {} stopRecognition: {}
     }
     
     private actor SpeechRecognizer {
@@ -107,7 +104,7 @@ extension SpeechRecognizerClient: DependencyKey {
             
             inputNode.removeTap(onBus: 0)
             sleep(1)
-            inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
+            inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, _: AVAudioTime) in
                 recognitionRequest.append(buffer)
             }
             
@@ -135,10 +132,9 @@ extension SpeechRecognizerClient: DependencyKey {
                 recognitionRequest.endAudio()
                 stopRecognition()
             }
-            
         }
         
-        func stopRecognition()  {
+        func stopRecognition() {
             recognitionTask?.finish()
             recognitionRequest?.endAudio()
             audioEngine.stop()
@@ -154,10 +150,5 @@ extension SpeechRecognizerClient: DependencyKey {
             recognitionTask = nil
             speechRecognizer = nil
         }
-        
     }
-
 }
-
-
-
