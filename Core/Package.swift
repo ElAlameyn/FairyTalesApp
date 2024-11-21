@@ -66,5 +66,8 @@ let package = Package(
         .target(name: "SharedModels"),
         .testTarget(
             name: "CoreTests",
-            dependencies: ["Core"])
+            dependencies: ["Core"]),
+        .testTarget(
+            name: "ChapterFeatureTests",
+            dependencies: ["ChapterFeature"])
     ])

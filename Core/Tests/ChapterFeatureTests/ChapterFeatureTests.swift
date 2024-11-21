@@ -6,10 +6,10 @@
 //
 
 import XCTest
-import Dependencies
+
 import ComposableArchitecture
 import SharedModels
-@testable import FairyTales
+@testable import ChapterFeature
 
 final class FairyTalesTests: XCTestCase {
     

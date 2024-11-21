@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8621DE1F2C83AA6800242B0E /* FairyTalesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */; };
 		CD34771D2CEF535B00C3E714 /* ChaptersFeature in Frameworks */ = {isa = PBXBuildFile; productRef = CD34771C2CEF535B00C3E714 /* ChaptersFeature */; };
 		CD6A70F82CDEB0BF005E69CA /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70E42CDEB0BF005E69CA /* AudioRecorder.swift */; };
 		CD6A70FA2CDEB0BF005E69CA /* FileHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A70E62CDEB0BF005E69CA /* FileHelpers.swift */; };
@@ -30,7 +29,6 @@
 
 /* Begin PBXFileReference section */
 		8621DE1C2C83AA6800242B0E /* FairyTalesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FairyTalesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FairyTalesTests.swift; sourceTree = "<group>"; };
 		866D99562BFCAEBA00E73A8F /* FairyTales.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FairyTales.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD224D732CDEB2500072C103 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Core; sourceTree = SOURCE_ROOT; };
 		CD6A70E42CDEB0BF005E69CA /* AudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
@@ -61,19 +59,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8621DE1D2C83AA6800242B0E /* FairyTalesTests */ = {
-			isa = PBXGroup;
-			children = (
-				8621DE1E2C83AA6800242B0E /* FairyTalesTests.swift */,
-			);
-			path = FairyTalesTests;
-			sourceTree = "<group>";
-		};
 		866D994D2BFCAEBA00E73A8F = {
 			isa = PBXGroup;
 			children = (
 				CD6A70F42CDEB0BF005E69CA /* FairyTalesApp */,
-				8621DE1D2C83AA6800242B0E /* FairyTalesTests */,
 				866D99572BFCAEBA00E73A8F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -224,7 +213,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8621DE1F2C83AA6800242B0E /* FairyTalesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
