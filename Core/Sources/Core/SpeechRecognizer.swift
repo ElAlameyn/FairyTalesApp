@@ -9,6 +9,7 @@ import AVFoundation
 import ComposableArchitecture
 import SharedModels
 import Speech
+import Combine
 
 public struct SpeechRecognizerClient {
     public var recognizedSpeech: @Sendable () async -> AsyncThrowingStream<[Substring], Error>
@@ -56,23 +57,13 @@ extension SpeechRecognizerClient: DependencyKey {
         @Dependency(\.userAccessManager) var userAccessManager
         @Dependency(\.audioSession) var audioSessionShared
         
-        var recognizedWordsStream: AsyncThrowingStream<[Substring], Error> {
-            textStream
-                .stream
-                .flatMap { array in
-                    let transformed = array.map { $0.getWords() }
-                    return Array(transformed).publisher.values
-                }
-                .eraseToThrowingStream()
-        }
-        
-        private var textStream = AsyncThrowingStream<[String], Error>.makeStream()
+        var recognizedWordsStream: AsyncThrowingStream<[Substring], any Error>!
 
         var isRecognizing = false
         
         func startRecognition() async {
-            textStream = AsyncThrowingStream<[String], Error>.makeStream()
-            let textContinuation = textStream.continuation
+            let (stream, textContinuation) = AsyncThrowingStream<[Substring], Error>.makeStream()
+            recognizedWordsStream = stream
             
             guard await userAccessManager.askForSpeechRecognition() == .authorized else { return }
             
@@ -100,10 +91,7 @@ extension SpeechRecognizerClient: DependencyKey {
             
             let recordingFormat = inputNode.outputFormat(forBus: 0)
             
-            print("Recording format: \(recordingFormat)")
-            
             inputNode.removeTap(onBus: 0)
-            sleep(1)
             inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, _: AVAudioTime) in
                 recognitionRequest.append(buffer)
             }
@@ -113,7 +101,12 @@ extension SpeechRecognizerClient: DependencyKey {
                 guard let self else { return }
                 
                 if let result {
-                    textContinuation.yield(result.transcriptions.map(\.formattedString))
+                    print("RRR: ", result.transcriptions)
+                    textContinuation.yield(
+                        result.transcriptions
+                            .map(\.formattedString)
+                            .flatMap { $0.getWords() }
+                    )
                 } else if let error {
                     textContinuation.yield(with: .failure(error))
                     Task { await self.stopRecognition() }
@@ -121,6 +114,8 @@ extension SpeechRecognizerClient: DependencyKey {
                     Task { await self.stopRecognition() }
                 }
             }
+            
+//            recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest, delegate: delegate)
             
             audioEngine.prepare()
             
@@ -152,3 +147,26 @@ extension SpeechRecognizerClient: DependencyKey {
         }
     }
 }
+//
+//extension SpeechRecognizerClient {
+//    fileprivate class Delegate: NSObject, SFSpeechRecognitionTaskDelegate {
+//        
+//        var continuation: AsyncThrowingStream<String, Error>.Continuation?
+//        
+//        override init() { continuation = nil }
+//        
+//        init(continuation: AsyncThrowingStream<String, Error>.Continuation) {
+//            self.continuation = continuation
+//        }
+//        
+//        func speechRecognitionDidDetectSpeech(_ task: SFSpeechRecognitionTask) {
+//            print("Started recording")
+//        }
+//        
+//        func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didHypothesizeTranscription transcription: SFTranscription) {
+//            print("Transcription : \(transcription.formattedString)")
+//            continuation?.yield(transcription.formattedString)
+//        }
+//        
+//    }
+//}

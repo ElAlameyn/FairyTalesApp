@@ -26,8 +26,8 @@ public struct ChapterFeature {
     public struct State: Equatable, Identifiable {
         public var id = UUID()
         public var readingState = ReadingState.inProcess
+        public var status = RecognitionFeature.State.Status.stopRecognition
         public var playbackMode = LottiePlaybackMode.paused(at: .progress(0))
-        public var recognitionState = RecognitionFeature.State()
         public var visibleText = AttributedString("")
         public var matches = [String]()
         public var animationName: String = ""
@@ -46,7 +46,6 @@ public struct ChapterFeature {
     
     public enum Action: Equatable {
         case recordButtonTapped
-        case recognitionFeature(RecognitionFeature.Action)
         case successReadPage
         case makeTextColored(recognizedWords: [Substring])
         case matchToAnimation(recognizedWords: [Substring])
@@ -56,26 +55,10 @@ public struct ChapterFeature {
     @Dependency(\.speechRecognizerClient) var speechRecognizer
     
     public var body: some ReducerOf<Self> {
-        Scope(state: \.recognitionState, action: \.recognitionFeature) {
-            RecognitionFeature()
-        }
         
         Reduce { state, action in
             switch action {
-            case .recordButtonTapped:
-                return .run { [status = state.recognitionState.status] send in
-                    status == .stopRecognition
-                        ? await send(.recognitionFeature(.startRecording))
-                        : await send(.recognitionFeature(.stopRecording))
-                }
-                
-            case let .recognitionFeature(.getRecognized(words: words)):
-                return .run { send in
-                    await send(.makeTextColored(recognizedWords: words))
-                    await send(.matchToAnimation(recognizedWords: words))
-                }
-                
-            case .recognitionFeature: break
+            case .recordButtonTapped: break
             case .successReadPage: break
             case let .makeTextColored(recognizedWords):
                 for word in recognizedWords {
@@ -150,7 +133,9 @@ public struct ChapterView: View {
             GeometryReader { proxy in
                 VStack(spacing: 40) {
                     
-                    LottieView(animation: .named(store.animationName, bundle: .module)) .playbackMode(store.playbackMode) .frame(height: proxy.size.height / 2)
+                    LottieView(animation: .named(store.animationName, bundle: .module)) 
+                        .playbackMode(store.playbackMode)
+                        .frame(height: proxy.size.height / 2)
                     
 
                     Text(store.visibleText)
@@ -161,7 +146,7 @@ public struct ChapterView: View {
                 .padding()
             
                 Group {
-                    if store.recognitionState.status == .startRecognition {
+                    if store.status == .startRecognition {
                         Image(systemName: "waveform.circle")
                             .font(.system(size: recordIconSize))
                             .symbolEffect(.variableColor.iterative.hideInactiveLayers.reversing)

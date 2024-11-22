@@ -11,7 +11,6 @@ import SwiftUI
 
 @Reducer
 public struct RecognitionFeature {
-    
     public init() {}
     
     @ObservableState
@@ -30,15 +29,17 @@ public struct RecognitionFeature {
     public enum Action: Equatable {
         case startRecording
         case stopRecording
+        case toggle
         case bind
         case getRecognized(words: [Substring])
     }
     
     @Dependency(\.speechRecognizerClient) var speechRecognizer
     
+    enum CancelBindingRecognition { case cancelIfInFlight }
+    
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
-            
             switch action {
             case .startRecording:
                 state.status = .startRecognition
@@ -46,26 +47,27 @@ public struct RecognitionFeature {
                     await speechRecognizer.startRecognition()
                     await send(.bind)
                 }
+                .merge(with: .cancel(id: CancelBindingRecognition.cancelIfInFlight))
             case .stopRecording:
                 state.status = .stopRecognition
                 return .run { _ in
                     await speechRecognizer.stopRecognition()
                 }
+            case .toggle:
+                return state.status == .stopRecognition ? .send(.startRecording) : .send(.stopRecording)
             case .bind:
                 return .run { send in
                     for try await words in await speechRecognizer.recognizedSpeech() {
                         await send(.getRecognized(words: words))
                     }
-                } catch: { error, send in
+                } catch: { error, _ in
                     print("Binding audio error: ", error.localizedDescription)
                 }
+                .cancellable(id: CancelBindingRecognition.cancelIfInFlight)
                 
             case .getRecognized(words: _):
                 return .none
-                
             }
         }
     }
-
-    
 }
