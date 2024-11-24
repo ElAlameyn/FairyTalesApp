@@ -8,35 +8,26 @@ let package = Package(
     platforms: [.iOS(.v17)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "Core",
-            targets: ["Core"]),
-        .library(
-            name: "SharedModels",
-            targets: ["SharedModels"]),
-        .library(
-            name: "ChapterFeature",
-            targets: ["ChapterFeature"]),
-        .library(
-            name: "ChaptersFeature",
-            targets: ["ChaptersFeature"]),
-        .library(
-            name: "RecognitionFeature",
-            targets: ["RecognitionFeature"])
+        .library(name: "Core", targets: ["Core"]),
+        .library(name: "SharedModels", targets: ["SharedModels"]),
+        .library(name: "ChapterFeature", targets: ["ChapterFeature"]),
+        .library(name: "ChaptersFeature", targets: ["ChaptersFeature"]),
+        .library(name: "RecognitionFeature", targets: ["RecognitionFeature"]),
+        .library(name: "HomeFeature", targets: ["HomeFeature"])
     ],
     dependencies: [
         .package(url: "https://github.com/airbnb/lottie-spm.git", from: "4.5.0"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.16.0"), // Composable Architecture
         .package(url: "https://github.com/pointfreeco/swift-overture", from: "0.5.0"),
-        .package( url: "https://github.com/apple/swift-collections.git", .upToNextMinor(from: "1.1.0") // or `.upToNextMajor
-           )
+        .package(url: "https://github.com/apple/swift-collections.git", .upToNextMinor(from: "1.1.0") // or `.upToNextMajor
+        )
 
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(name: "Core", dependencies: [
-            .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
         ]),
         .target(
             name: "ChapterFeature",
@@ -46,8 +37,7 @@ let package = Package(
                 .product(name: "Overture", package: "swift-overture"),
                 "SharedModels",
                 "RecognitionFeature"
-            ], resources: [.process("Animations")]
-        ),
+            ], resources: [.process("Animations")]),
         .target(
             name: "ChaptersFeature",
             dependencies: [
@@ -63,6 +53,15 @@ let package = Package(
                 "Core",
                 "SharedModels"
             ]),
+        .target(
+            name: "HomeFeature",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                "ChaptersFeature",
+                "SharedModels"
+            ],
+            resources: [.process("Assets.xcassets")]
+        ),
         .target(name: "SharedModels"),
         .testTarget(
             name: "CoreTests",

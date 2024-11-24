@@ -13,9 +13,9 @@ import SharedModels
 import SwiftUI
 import RecognitionFeature
 
-// TODO: Fix bug with double recognition
 // TODO: Show success read state (confetti)
 // TODO: Create constructor of fairy tales
+// TODO: Make sliding
 
 @Reducer
 public struct ChapterFeature {
@@ -26,7 +26,7 @@ public struct ChapterFeature {
     public struct State: Equatable, Identifiable {
         public var id = UUID()
         public var readingState = ReadingState.inProcess
-        public var status = RecognitionFeature.State.Status.stopRecognition
+        public var displayButtonStatus = RecognitionFeature.State.Status.stopRecognition
         public var playbackMode = LottiePlaybackMode.paused(at: .progress(0))
         public var visibleText = AttributedString("")
         public var matches = [String]()
@@ -146,7 +146,7 @@ public struct ChapterView: View {
                 .padding()
             
                 Group {
-                    if store.status == .startRecognition {
+                    if store.displayButtonStatus == .startRecognition {
                         Image(systemName: "waveform.circle")
                             .font(.system(size: recordIconSize))
                             .symbolEffect(.variableColor.iterative.hideInactiveLayers.reversing)

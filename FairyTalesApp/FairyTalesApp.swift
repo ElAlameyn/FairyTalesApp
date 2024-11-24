@@ -7,12 +7,16 @@
 
 import SwiftUI
 import ChaptersFeature
+import SharedModels
 
 @main
 struct FairyTalesApp: App {
     var body: some Scene {
         WindowGroup {
-            ChaptersView()
+                        ChaptersView(state: .init(chapters: Chapters.KnightStory.values))
+//            ChaptersView(store: .init(initialState: .init(chapters: Chapters.KnightStory.values), reducer: {
+//                SuccessChaptersReadReducer()
+//            }))
         }
     }
 }

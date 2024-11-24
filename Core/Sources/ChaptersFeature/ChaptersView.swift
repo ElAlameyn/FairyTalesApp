@@ -24,19 +24,17 @@ public struct ChaptersFeature {
         public var dequeElements: Deque<ChapterFeature.State>
         public var chapters: IdentifiedArray<UUID, ChapterFeature.State>
         public var recognitionState = RecognitionFeature.State()
-        init(chapters: [Chapter]) {
+        
+        public init(chapters: [Chapter]) {
             let values = chapters.map(ChapterFeature.State.init(chapter:))
             let idsArray = IdentifiedArray(uniqueElements: [values.first!])
             self.chapters = idsArray
             self.dequeElements = Deque(values.dropFirst())
             self.tab = idsArray.ids.first!
         }
-        
-        private static let values = Chapters.One.values.map(ChapterFeature.State.init(chapter:))
     }
     
     public enum Action {
-        case tabChanged(UUID)
         case chapters(IdentifiedAction<UUID, ChapterFeature.Action>)
         case recognitionFeature(RecognitionFeature.Action)
     }
@@ -50,11 +48,9 @@ public struct ChaptersFeature {
         
         Reduce { state, action in
             switch action {
-            case let .tabChanged(value):
-                state.tab = value
             case let .chapters(.element(id: id, action: action)):
                 switch action {
-                case .recordButtonTapped: 
+                case .recordButtonTapped:
                     return .send(.recognitionFeature(.toggle))
                     
                 case .successReadPage:
@@ -64,7 +60,7 @@ public struct ChaptersFeature {
                             state.tab = element.id
                         }
                         state.chapters[id: id]?.readingState = .success
-                        state.chapters[id: id]?.status = .stopRecognition
+                        state.chapters[id: id]?.displayButtonStatus = .stopRecognition
 
                         return .send(.recognitionFeature(.stopRecording))
                     }
@@ -77,10 +73,10 @@ public struct ChaptersFeature {
                     .send(.chapters(.element(id: state.tab, action: .matchToAnimation(recognizedWords: words))))
                 )
             case .recognitionFeature(.startRecording):
-                state.chapters[id: state.tab]?.status = .startRecognition
+                state.chapters[id: state.tab]?.displayButtonStatus = .startRecognition
             case .recognitionFeature(.stopRecording):
-                state.chapters[id: state.tab]?.status = .stopRecognition
-            case .recognitionFeature(_): break
+                state.chapters[id: state.tab]?.displayButtonStatus = .stopRecognition
+            case .recognitionFeature: break
             }
             return .none
         }
@@ -90,17 +86,39 @@ public struct ChaptersFeature {
         ._printChanges()
     }
 }
+
+@Reducer
+public struct SuccessChaptersReadReducer {
+    public init() {}
+    
+    public var body: some Reducer<ChaptersFeature.State, ChaptersFeature.Action> {
+        Reduce { state, action in
+            if case let .chapters(.element(id: _, action: action)) = action {
+                if case .recordButtonTapped = action {
+                    if let element = state.dequeElements.popFirst() {
+                        state.chapters.append(element)
+                        state.tab = element.id
+                    }
+                }
+            }
+            return .none
+        }
+    }
+}
     
 public struct ChaptersView: View {
-    @Bindable var store: StoreOf<ChaptersFeature> = .init(
-        initialState: .init(chapters: Chapters.One.values)
-    ) {
-        ChaptersFeature()
-    }
-        
+    @Bindable var store: StoreOf<ChaptersFeature>
     @State var selection: UUID = .init()
         
-    public init() {}
+    public init(state: ChaptersFeature.State) {
+        self.store = .init(initialState: state) {
+            ChaptersFeature()
+        }
+    }
+    
+    public init(store: StoreOf<ChaptersFeature>) {
+        self.store = store
+    }
         
     public var body: some View {
         TabView(selection: $selection) {
@@ -110,9 +128,6 @@ public struct ChaptersView: View {
             }
         }
         .transition(.slide)
-        .onChange(of: selection) { _, newValue in
-            store.send(.tabChanged(newValue))
-        }
         .onChange(of: store.tab) { _, newValue in
             withAnimation(.easeIn) {
                 selection = newValue
@@ -123,5 +138,5 @@ public struct ChaptersView: View {
 }
 
 #Preview {
-    ChaptersView()
+    ChaptersView(state: .init(chapters: Chapters.One.values))
 }

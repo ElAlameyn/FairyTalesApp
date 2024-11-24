@@ -31,4 +31,14 @@ public extension Chapters {
             Chapter.plantWasGrown
         ]
     }
+    
+    enum KnightStory {
+        public static let values = [
+           Chapter(animatinonName: "dragon", matches: ["любовь"], text: "Любовь"),
+           Chapter(animatinonName: "princess", matches: ["тоска"], text: "тоска"),
+           Chapter(animatinonName: "king", matches: ["печаль"], text: "печаль"),
+           Chapter(animatinonName: "fight", matches: ["счастье"], text: "счастье"),
+           Chapter(animatinonName: "wedding", matches: ["грусть"], text: "грусть"),
+       ]
+    }
 }
