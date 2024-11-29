@@ -52,15 +52,25 @@ public struct ChaptersFeature {
                 switch action {
                 case .recordButtonTapped:
                     return .send(.recognitionFeature(.toggle))
+                
+                case .didFinishAnimation:
+                    if let id = state.chapters.last?.id  {
+                        state.tab = id
+                    }
                     
                 case .successReadPage:
-                    if state.chapters[id: id]?.readingState != .success {
+                    if var chapter = state.chapters[id: id], chapter.readingState != .success {
                         if let element = state.dequeElements.popFirst() {
                             state.chapters.append(element)
-                            state.tab = element.id
+                            
+                            if chapter.animationIsFinished {
+                                state.tab = element.id
+                            }
                         }
-                        state.chapters[id: id]?.readingState = .success
-                        state.chapters[id: id]?.displayButtonStatus = .stopRecognition
+                        chapter.readingState = .success
+                        chapter.displayButtonStatus = .stopRecognition
+                        
+                        state.chapters[id: id] = chapter
 
                         return .send(.recognitionFeature(.stopRecording))
                     }
@@ -129,9 +139,11 @@ public struct ChaptersView: View {
         }
         .transition(.slide)
         .onChange(of: store.tab) { _, newValue in
-            withAnimation(.easeIn) {
-                selection = newValue
-            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                withAnimation(.easeIn) {
+                    selection = newValue
+                }
+            })
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
     }

@@ -25,6 +25,7 @@ public struct ChapterFeature {
     @ObservableState
     public struct State: Equatable, Identifiable {
         public var id = UUID()
+        public var animationIsFinished = false
         public var readingState = ReadingState.inProcess
         public var displayButtonStatus = RecognitionFeature.State.Status.stopRecognition
         public var playbackMode = LottiePlaybackMode.paused(at: .progress(0))
@@ -50,6 +51,7 @@ public struct ChapterFeature {
         case makeTextColored(recognizedWords: [Substring])
         case matchToAnimation(recognizedWords: [Substring])
         case checkIfAllRead
+        case didFinishAnimation
     }
     
     @Dependency(\.speechRecognizerClient) var speechRecognizer
@@ -104,6 +106,8 @@ public struct ChapterFeature {
                 }
                 
                 return .run { send in await send(.successReadPage) }
+            case .didFinishAnimation:
+                state.animationIsFinished = true
             }
             return .none
         }
@@ -132,9 +136,13 @@ public struct ChapterView: View {
         ZStack {
             GeometryReader { proxy in
                 VStack(spacing: 40) {
-                    
-                    LottieView(animation: .named(store.animationName, bundle: .module)) 
+                    LottieView(animation: .named(store.animationName, bundle: .module))
                         .playbackMode(store.playbackMode)
+                        .animationDidFinish { completed in
+                            if completed {
+                                store.send(.didFinishAnimation)
+                            }
+                        }
                         .frame(height: proxy.size.height / 2)
                     
 

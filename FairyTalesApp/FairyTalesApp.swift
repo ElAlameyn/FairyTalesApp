@@ -13,6 +13,7 @@ import SharedModels
 struct FairyTalesApp: App {
     var body: some Scene {
         WindowGroup {
+            
                         ChaptersView(state: .init(chapters: Chapters.KnightStory.values))
 //            ChaptersView(store: .init(initialState: .init(chapters: Chapters.KnightStory.values), reducer: {
 //                SuccessChaptersReadReducer()

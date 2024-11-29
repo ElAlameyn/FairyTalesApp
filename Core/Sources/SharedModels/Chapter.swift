@@ -13,7 +13,7 @@ public struct Chapter: Hashable {
     public var text: String
 }
 
-public enum ReadingState { case success, inProcess, alreadySet }
+public enum ReadingState { case success, inProcess, waitUntilFinishAnimation }
 
 public extension Chapter {
     static let helloWorld = Self(matches: ["hello"], text: "hello world")
