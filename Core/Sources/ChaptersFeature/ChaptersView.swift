@@ -37,6 +37,7 @@ public struct ChaptersFeature {
     public enum Action {
         case chapters(IdentifiedAction<UUID, ChapterFeature.Action>)
         case recognitionFeature(RecognitionFeature.Action)
+        case onAppear
     }
     
     public enum Cancel: Hashable { case foo }
@@ -87,6 +88,8 @@ public struct ChaptersFeature {
             case .recognitionFeature(.stopRecording):
                 state.chapters[id: state.tab]?.displayButtonStatus = .stopRecognition
             case .recognitionFeature: break
+            case .onAppear:
+                return .send(.recognitionFeature(.bind))
             }
             return .none
         }
@@ -138,6 +141,9 @@ public struct ChaptersView: View {
             }
         }
         .transition(.slide)
+        .onAppear {
+            store.send(.onAppear)
+        }
         .onChange(of: store.tab) { _, newValue in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                 withAnimation(.easeIn) {

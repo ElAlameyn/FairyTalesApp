@@ -5,7 +5,24 @@
 //  Created by Bravery on 23.11.2024.
 //
 
+import ComposableArchitecture
 import SwiftUI
+import ChaptersFeature
+
+@Reducer
+struct HomeFeature {
+    public init() {}
+
+    @ObservableState
+    public struct State {
+        public var chaptersState = ChaptersFeature.State(chapters: [])
+        public init() {}
+    }
+    
+    public enum Action {
+        case chapters(ChaptersFeature.Action)
+    }
+}
 
 struct HomeView: View {
     @State private var age = ""

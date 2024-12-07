@@ -64,6 +64,7 @@ public struct RecognitionFeature {
                     print("Binding audio error: ", error.localizedDescription)
                 }
                 .cancellable(id: CancelBindingRecognition.cancelIfInFlight)
+                // TODO: Cancel binding if not on screen
                 
             case .getRecognized(words: _):
                 return .none
@@ -71,3 +72,4 @@ public struct RecognitionFeature {
         }
     }
 }
+

@@ -145,10 +145,9 @@ public struct ChapterView: View {
                         }
                         .frame(height: proxy.size.height / 2)
                     
-
                     Text(store.visibleText)
+                        .multilineTextAlignment(.leading)
                 
-                    Spacer().frame(height: proxy.size.height / 2.5)
                 }
                 .frame(maxWidth: .infinity)
                 .padding()

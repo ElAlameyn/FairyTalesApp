@@ -28,7 +28,7 @@ extension SpeechRecognizerClient: DependencyKey {
     public static var liveValue: SpeechRecognizerClient {
         let speechRecognizer = SpeechRecognizer()
         return Self {
-            await speechRecognizer.recognizedWordsStream
+            await speechRecognizer.recognizedWordsStream.stream
         } startRecognition: {
             await speechRecognizer.startRecognition()
         } stopRecognition: {
@@ -57,13 +57,13 @@ extension SpeechRecognizerClient: DependencyKey {
         @Dependency(\.userAccessManager) var userAccessManager
         @Dependency(\.audioSession) var audioSessionShared
         
-        var recognizedWordsStream: AsyncThrowingStream<[Substring], any Error>!
+        var recognizedWordsStream = AsyncThrowingStream<[Substring], any Error>.makeStream()
 
         var isRecognizing = false
         
         func startRecognition() async {
-            let (stream, textContinuation) = AsyncThrowingStream<[Substring], Error>.makeStream()
-            recognizedWordsStream = stream
+            recognizedWordsStream = AsyncThrowingStream<[Substring], any Error>.makeStream()
+            let (_, textContinuation) = recognizedWordsStream
             
             guard await userAccessManager.askForSpeechRecognition() == .authorized else { return }
             
